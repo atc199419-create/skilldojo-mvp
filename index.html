@@ -1177,6 +1177,10 @@
         text-align: center;
       }
 
+      .mobile-game-nav {
+        display: none;
+      }
+
       .is-hidden {
         display: none !important;
       }
@@ -1283,7 +1287,7 @@
 
       @media (max-width: 720px) {
         html {
-          scroll-padding-top: 132px;
+          scroll-padding-top: 92px;
         }
 
         body::before {
@@ -1316,6 +1320,15 @@
           max-width: 100%;
         }
 
+        .topbar-inner {
+          min-height: 72px;
+          justify-content: center;
+        }
+
+        .topbar .nav-actions {
+          display: none;
+        }
+
         .nav-actions {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1337,6 +1350,53 @@
         .hero {
           min-height: auto;
           padding: 28px 0;
+        }
+
+        body.mobile-app-active {
+          height: 100dvh;
+          overflow: hidden;
+        }
+
+        body.mobile-app-active main {
+          height: calc(100dvh - 86px);
+          overflow: hidden;
+        }
+
+        body.mobile-app-active .footer {
+          display: none;
+        }
+
+        body.mobile-app-active .hero,
+        body.mobile-app-active #arena,
+        body.mobile-app-active #progreso {
+          display: none;
+        }
+
+        body.mobile-view-home .hero,
+        body.mobile-view-arena #arena,
+        body.mobile-view-progress #progreso {
+          display: grid;
+        }
+
+        body.mobile-view-arena #arena,
+        body.mobile-view-progress #progreso {
+          height: calc(100dvh - 86px);
+          overflow: hidden;
+          padding: 10px 0 calc(78px + env(safe-area-inset-bottom));
+        }
+
+        body.mobile-view-home .hero {
+          min-height: calc(100dvh - 86px);
+          overflow: auto;
+          padding: 16px 0 calc(86px + env(safe-area-inset-bottom));
+        }
+
+        body.mobile-view-home .hero-terminal {
+          display: none;
+        }
+
+        body.mobile-view-home .status-grid {
+          display: none;
         }
 
         .hero-terminal,
@@ -1454,6 +1514,50 @@
           max-width: 100%;
         }
 
+        body.mobile-view-arena .app-stage {
+          height: 100%;
+          display: block;
+          overflow: hidden;
+        }
+
+        body.mobile-view-arena .side-console {
+          display: none;
+        }
+
+        body.mobile-view-arena .trainer {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        body.mobile-view-arena .trainer-head {
+          min-height: auto;
+          flex: 0 0 auto;
+          padding: 12px;
+        }
+
+        body.mobile-view-arena .screen.is-active {
+          flex: 1 1 auto;
+          min-height: 0;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          padding-bottom: 88px;
+        }
+
+        body.mobile-view-progress #progreso > .container {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        body.mobile-view-progress .progress-grid {
+          flex: 1 1 auto;
+          overflow-y: auto;
+          padding-bottom: 86px;
+        }
+
         .side-console,
         .question-card,
         .mission-card,
@@ -1508,6 +1612,36 @@
         .actions-row .btn,
         .reward-card .btn {
           width: 100%;
+        }
+
+        .mobile-game-nav {
+          position: fixed;
+          left: 10px;
+          right: 10px;
+          bottom: max(10px, env(safe-area-inset-bottom));
+          z-index: 60;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 7px;
+          padding: 8px;
+          border: 1px solid rgba(0, 229, 255, 0.2);
+          border-radius: 22px;
+          background: rgba(8, 9, 12, 0.96);
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.42);
+        }
+
+        .mobile-game-nav button {
+          min-height: 48px;
+          border-radius: 16px;
+          color: var(--muted);
+          background: rgba(255, 255, 255, 0.045);
+          font-size: 0.82rem;
+          font-weight: 900;
+        }
+
+        .mobile-game-nav button.is-active {
+          color: #00151A;
+          background: linear-gradient(135deg, var(--cyan), var(--turquoise));
         }
       }
 
@@ -1852,6 +1986,13 @@
       <footer class="footer">
         <div class="container">SkillDojo Cyber Dojo V4 &middot; Conviertete en un sensei digital.</div>
       </footer>
+
+      <nav class="mobile-game-nav" aria-label="Menu movil SkillDojo">
+        <button type="button" data-mobile-nav="home">Inicio</button>
+        <button type="button" data-mobile-nav="arena">Arena</button>
+        <button type="button" data-mobile-nav="mission">Misiones</button>
+        <button type="button" data-mobile-nav="progress">Progreso</button>
+      </nav>
     </div>
 
     <script>
@@ -2102,16 +2243,26 @@
         renderAvatarEverywhere();
         renderDiagnosticQuestion();
         updateDashboard();
-        showInitialScreen();
+        bindMobileNav();
+        if (isMobileApp()) {
+          setMobileView('home');
+          showScreen(state.name ? (state.diagnosticDone ? 'hub' : 'diagnostic') : 'profile');
+        } else {
+          showInitialScreen();
+        }
       }
 
       function bindActions() {
         document.body.addEventListener('click', function(event) {
           const target = event.target.closest('[data-action]');
           if (!target) return;
+          event.preventDefault();
 
           const actions = {
-            start: showInitialScreen,
+            start: function() {
+              setMobileView('arena');
+              showInitialScreen();
+            },
             saveProfile: saveProfile,
             prevDiagnostic: prevDiagnostic,
             nextDiagnostic: nextDiagnostic,
@@ -2131,6 +2282,77 @@
         document.getElementById('learnerName').addEventListener('input', function(event) {
           state.name = event.target.value.trim();
           renderAvatarEverywhere();
+        });
+      }
+
+      function bindMobileNav() {
+        document.querySelectorAll('[data-mobile-nav]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            const target = button.dataset.mobileNav;
+            if (target === 'home') {
+              setMobileView('home');
+              return;
+            }
+
+            if (target === 'progress') {
+              updateDashboard();
+              setMobileView('progress');
+              return;
+            }
+
+            setMobileView('arena');
+
+            if (target === 'mission') {
+              if (state.selectedDojo && getDojoStatus(state.selectedDojo) !== 'locked') {
+                renderMission();
+                showScreen('mission');
+              } else if (state.diagnosticDone) {
+                renderHub();
+                showScreen('hub');
+              } else {
+                showInitialScreen();
+              }
+              return;
+            }
+
+            if (state.diagnosticDone) {
+              renderHub();
+              showScreen('hub');
+            } else {
+              showInitialScreen();
+            }
+          });
+        });
+      }
+
+      function isMobileApp() {
+        return window.matchMedia('(max-width: 720px)').matches;
+      }
+
+      function setMobileView(view) {
+        if (!isMobileApp()) return;
+        document.body.classList.add('mobile-app-active');
+        ['home', 'arena', 'progress'].forEach(function(name) {
+          document.body.classList.toggle(`mobile-view-${name}`, name === view);
+        });
+        updateMobileNavState(view);
+        window.scrollTo(0, 0);
+      }
+
+      function updateMobileNavState(view) {
+        if (!isMobileApp()) return;
+        const activeScreen = Object.keys(screens).find(function(key) {
+          return screens[key].classList.contains('is-active');
+        });
+        document.querySelectorAll('[data-mobile-nav]').forEach(function(button) {
+          const nav = button.dataset.mobileNav;
+          const isMissionFlow = activeScreen === 'mission' || activeScreen === 'quiz' || activeScreen === 'reward';
+          const active =
+            (view === 'home' && nav === 'home') ||
+            (view === 'progress' && nav === 'progress') ||
+            (view === 'arena' && nav === 'arena' && !isMissionFlow) ||
+            (view === 'arena' && nav === 'mission' && isMissionFlow);
+          button.classList.toggle('is-active', active);
         });
       }
 
@@ -2228,6 +2450,7 @@
         const input = document.getElementById('learnerName');
         state.name = input.value.trim() || 'Aprendiz SkillDojo';
         saveState();
+        setMobileView('arena');
         showScreen('diagnostic');
       }
 
@@ -2373,7 +2596,8 @@
         state.selectedDojo = state.recommendedDojo;
         saveState();
         renderHub();
-        showScreen('hub');
+        renderMission();
+        showScreen('mission');
       }
 
       function getDojoStatus(id) {
@@ -2818,6 +3042,14 @@
         document.getElementById('screenTitle').textContent = meta[1];
         document.getElementById('screenStep').textContent = meta[2];
         renderAvatarEverywhere();
+        if (isMobileApp()) {
+          const view = document.body.classList.contains('mobile-view-home')
+            ? 'home'
+            : document.body.classList.contains('mobile-view-progress')
+              ? 'progress'
+              : 'arena';
+          updateMobileNavState(view);
+        }
       }
 
       function resetTraining() {
