@@ -1,0 +1,2837 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SkillDojo | Cyber Dojo V4</title>
+
+    <style>
+      :root {
+        --bg: #08090C;
+        --navy: #011F35;
+        --turquoise: #00A791;
+        --cyan: #00E5FF;
+        --gold: #FFD700;
+        --text: #FFFFFF;
+        --muted: #8A92A6;
+        --line: rgba(0, 229, 255, 0.2);
+        --glass: rgba(8, 20, 34, 0.78);
+        --glass-strong: rgba(9, 29, 48, 0.92);
+        --danger: #FF4D6D;
+        --success: #00FF87;
+        --excel: #00FF87;
+        --office: #00E5FF;
+        --ai: #7B2CBF;
+        --pc: #FF9F1C;
+        --shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+        --radius: 24px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        min-width: 0;
+      }
+
+      html {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        scroll-padding-top: 86px;
+      }
+
+      body {
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+          radial-gradient(circle at 15% 12%, rgba(0, 167, 145, 0.32), transparent 25%),
+          radial-gradient(circle at 85% 18%, rgba(0, 229, 255, 0.2), transparent 24%),
+          radial-gradient(circle at 50% 88%, rgba(123, 44, 191, 0.18), transparent 32%),
+          linear-gradient(180deg, #08090C 0%, #011F35 58%, #070B12 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background-image:
+          linear-gradient(rgba(0, 229, 255, 0.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 229, 255, 0.045) 1px, transparent 1px);
+        background-size: 54px 54px;
+        opacity: 0.72;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background:
+          linear-gradient(120deg, transparent 0%, rgba(0, 229, 255, 0.08) 46%, transparent 56%),
+          radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.24) 75%);
+        animation: energySweep 8s ease-in-out infinite alternate;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        font-size: 16px;
+      }
+
+      button {
+        border: 0;
+      }
+
+      img,
+      svg,
+      canvas,
+      video {
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      span,
+      strong,
+      small,
+      button,
+      a {
+        overflow-wrap: anywhere;
+      }
+
+      .container {
+        width: min(1160px, calc(100% - 32px));
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        border-bottom: 1px solid rgba(0, 229, 255, 0.14);
+        background: rgba(8, 9, 12, 0.78);
+        backdrop-filter: blur(12px);
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+
+      .topbar-inner {
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        min-width: 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .brand-logo {
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle, rgba(0, 229, 255, 0.16), rgba(8, 9, 12, 0.88) 68%),
+          var(--bg);
+        border: 1px solid rgba(0, 229, 255, 0.22);
+        box-shadow: 0 0 34px rgba(0, 229, 255, 0.32);
+      }
+
+      .brand-logo img {
+        width: 86%;
+        height: 86%;
+        object-fit: contain;
+        display: block;
+        border-radius: 999px;
+      }
+
+      .brand-name {
+        display: block;
+        font-weight: 900;
+        font-size: 1.22rem;
+        line-height: 1;
+        overflow-wrap: anywhere;
+      }
+
+      .brand-name span {
+        color: var(--turquoise);
+      }
+
+      .brand-sub {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+
+      .nav-link,
+      .btn {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 0 18px;
+        border-radius: 999px;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 900;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      .nav-link {
+        color: #C9D7E0;
+        background: transparent;
+      }
+
+      .nav-link:hover {
+        background: rgba(0, 229, 255, 0.08);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        color: #021017;
+        background: linear-gradient(135deg, var(--cyan), var(--turquoise));
+        box-shadow: 0 0 34px rgba(0, 229, 255, 0.36);
+      }
+
+      .btn-pulse {
+        animation: pulseButton 2.4s ease-in-out infinite;
+        will-change: transform;
+      }
+
+      .btn-outline {
+        border: 1px solid rgba(0, 229, 255, 0.24);
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .btn-gold {
+        color: #171100;
+        background: linear-gradient(135deg, #FFF2A6, var(--gold));
+        box-shadow: 0 0 32px rgba(255, 215, 0, 0.28);
+      }
+
+      .hero {
+        min-height: calc(100vh - 72px);
+        display: grid;
+        align-items: center;
+        padding: 34px 0;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.82fr);
+        gap: 28px;
+        align-items: center;
+        max-width: 100%;
+      }
+
+      .eyebrow {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 13px;
+        border: 1px solid rgba(0, 229, 255, 0.26);
+        border-radius: 999px;
+        color: var(--cyan);
+        background: rgba(0, 229, 255, 0.08);
+        font-size: 0.86rem;
+        font-weight: 900;
+      }
+
+      .hero h1 {
+        max-width: 820px;
+        margin-top: 18px;
+        font-size: clamp(2.3rem, 6vw, 5.2rem);
+        line-height: 1;
+        letter-spacing: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .hero h1 span {
+        color: var(--turquoise);
+        text-shadow: 0 0 36px rgba(0, 167, 145, 0.52);
+      }
+
+      .hero-copy {
+        max-width: 720px;
+        margin-top: 18px;
+        color: #C4D0DE;
+        font-size: 1.08rem;
+        line-height: 1.68;
+      }
+
+      .hero-actions,
+      .actions-row,
+      .status-grid,
+      .profile-readout,
+      .choice-grid,
+      .progress-grid,
+      .option-grid,
+      .quiz-options,
+      .mission-brief {
+        max-width: 100%;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 26px;
+      }
+
+      .hero-terminal {
+        position: relative;
+        overflow: hidden;
+        max-width: 100%;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        background: linear-gradient(160deg, rgba(1, 31, 53, 0.92), rgba(8, 9, 12, 0.82));
+        box-shadow: var(--shadow);
+      }
+
+      .hero-terminal::before {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        right: -96px;
+        top: -90px;
+        border-radius: 999px;
+        background: rgba(0, 229, 255, 0.16);
+        opacity: 0.82;
+      }
+
+      .dojo-gate {
+        position: relative;
+        min-height: 410px;
+        display: grid;
+        place-items: center;
+        border-radius: 24px;
+        background:
+          linear-gradient(135deg, rgba(0, 167, 145, 0.1), rgba(0, 229, 255, 0.06)),
+          rgba(255, 255, 255, 0.04);
+      }
+
+      .gate-ring {
+        width: 238px;
+        height: 238px;
+        position: relative;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(0, 229, 255, 0.28);
+        border-radius: 999px;
+        box-shadow: inset 0 0 40px rgba(0, 229, 255, 0.08), 0 0 60px rgba(0, 167, 145, 0.16);
+        animation: ringSpin 18s linear infinite;
+        will-change: transform;
+        backface-visibility: hidden;
+      }
+
+      .gate-ring::before,
+      .gate-ring::after {
+        content: "";
+        position: absolute;
+        inset: 28px;
+        border-radius: 999px;
+        border: 1px dashed rgba(255, 215, 0, 0.24);
+      }
+
+      .gate-ring::after {
+        inset: 58px;
+        border-color: rgba(0, 167, 145, 0.4);
+      }
+
+      .gate-logo {
+        width: 116px;
+        height: 116px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle, rgba(0, 229, 255, 0.16), rgba(8, 9, 12, 0.9) 70%),
+          var(--bg);
+        border: 1px solid rgba(0, 229, 255, 0.22);
+        box-shadow: 0 0 40px rgba(0, 229, 255, 0.34);
+        animation: counterSpin 18s linear infinite;
+        will-change: transform;
+        backface-visibility: hidden;
+      }
+
+      .gate-logo img {
+        width: 92px;
+        height: 92px;
+        object-fit: contain;
+        display: block;
+        border-radius: 999px;
+      }
+
+      .gate-caption {
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        bottom: 22px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .status-card,
+      .glass-card,
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--glass);
+        box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
+        backdrop-filter: blur(10px);
+      }
+
+      .status-card {
+        min-height: 96px;
+        padding: 16px;
+      }
+
+      .status-card strong,
+      .status-card span {
+        display: block;
+      }
+
+      .status-card strong {
+        font-size: 1.18rem;
+      }
+
+      .status-card span {
+        margin-top: 7px;
+        color: var(--muted);
+        line-height: 1.4;
+        font-size: 0.9rem;
+      }
+
+      .section {
+        padding: 34px 0;
+      }
+
+      .app-stage {
+        display: grid;
+        grid-template-columns: minmax(250px, 0.65fr) minmax(0, 1.35fr);
+        gap: 16px;
+        align-items: start;
+        max-width: 100%;
+      }
+
+      .side-console {
+        padding: 18px;
+      }
+
+      .mini-profile {
+        display: grid;
+        gap: 16px;
+      }
+
+      .avatar-shell {
+        --aura: var(--turquoise);
+        position: relative;
+        width: 168px;
+        height: 168px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto;
+        border-radius: 999px;
+        background: radial-gradient(circle, color-mix(in srgb, var(--aura), #FFFFFF 12%), transparent 68%);
+        box-shadow: 0 0 44px color-mix(in srgb, var(--aura), transparent 42%);
+        animation: avatarFloat 3.4s ease-in-out infinite;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        will-change: transform;
+      }
+
+      .avatar-shell::before,
+      .avatar-shell::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        pointer-events: none;
+      }
+
+      .avatar-shell::before {
+        inset: 15px;
+        border: 1px solid color-mix(in srgb, var(--aura), transparent 42%);
+        box-shadow: inset 0 0 22px color-mix(in srgb, var(--aura), transparent 70%);
+      }
+
+      .avatar-shell::after {
+        width: 10px;
+        height: 10px;
+        right: 28px;
+        top: 24px;
+        background: var(--aura);
+        box-shadow:
+          -112px 68px 0 -2px color-mix(in srgb, var(--aura), transparent 20%),
+          -74px -10px 0 -3px #FFFFFF,
+          6px 118px 0 -3px color-mix(in srgb, var(--aura), #FFFFFF 20%);
+        opacity: 0.7;
+      }
+
+      .avatar-core {
+        width: 128px;
+        height: 128px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border: 1px solid color-mix(in srgb, var(--aura), #FFFFFF 16%);
+        border-radius: 999px;
+        color: var(--text);
+        background:
+          radial-gradient(circle, rgba(255, 255, 255, 0.08), rgba(8, 9, 12, 0.92) 72%),
+          #08090C;
+        box-shadow:
+          inset 0 0 28px rgba(255, 255, 255, 0.04),
+          0 0 28px color-mix(in srgb, var(--aura), transparent 70%);
+      }
+
+      .avatar-img {
+        width: 92%;
+        height: 92%;
+        display: block;
+        object-fit: contain;
+        border-radius: 999px;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+
+      .avatar-core.has-avatar-error::before {
+        content: "Avatar";
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 12px;
+        border: 1px solid color-mix(in srgb, var(--aura), transparent 35%);
+        border-radius: 999px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.05);
+        font-size: 0.78rem;
+        font-weight: 900;
+      }
+
+      .avatar-base {
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      .avatar-shell.is-thinking .avatar-core {
+        animation: avatarThink 1.4s ease-in-out infinite;
+      }
+
+      .avatar-shell.is-celebrate {
+        animation: avatarCelebrate 0.9s ease both;
+      }
+
+      .avatar-shell.is-celebrate::after {
+        opacity: 1;
+        box-shadow:
+          -116px 68px 0 -1px var(--gold),
+          -74px -10px 0 -2px #FFFFFF,
+          8px 118px 0 -2px var(--cyan),
+          -24px 12px 0 -3px var(--success),
+          -96px 114px 0 -3px var(--gold);
+      }
+
+      .avatar-shell.is-wrong .avatar-core {
+        border-color: var(--danger);
+        animation: answerShake 0.34s ease both;
+      }
+
+      .avatar-shell.style-competitivo .avatar-core {
+        transform: skewX(-2deg);
+        box-shadow:
+          inset 0 0 28px rgba(255, 255, 255, 0.04),
+          0 0 34px color-mix(in srgb, var(--aura), transparent 56%);
+      }
+
+      .avatar-shell.style-cinematico::before {
+        inset: 8px;
+        border-style: dashed;
+      }
+
+      .avatar-shell.avatar-mini {
+        width: 86px;
+        height: 86px;
+        margin: 0;
+      }
+
+      .avatar-shell.avatar-mini .avatar-core {
+        width: 66px;
+        height: 66px;
+        border-radius: 999px;
+      }
+
+      .avatar-shell.avatar-mini .avatar-img {
+        width: 58px;
+        height: 58px;
+      }
+
+      .avatar-choice {
+        min-height: 132px;
+        display: grid;
+        grid-template-columns: 88px 1fr;
+        gap: 12px;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .avatar-choice strong,
+      .avatar-choice span {
+        display: block;
+      }
+
+      .avatar-choice span {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.35;
+      }
+
+      .profile-readout {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .readout {
+        min-height: 74px;
+        padding: 13px;
+        border: 1px solid rgba(0, 229, 255, 0.16);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .readout strong,
+      .readout span {
+        display: block;
+      }
+
+      .readout span {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .progress-track {
+        width: 100%;
+        height: 13px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .progress-fill {
+        width: 0%;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--turquoise), var(--cyan));
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.42);
+        transition: width 0.35s ease;
+      }
+
+      .trainer {
+        overflow: hidden;
+        max-width: 100%;
+      }
+
+      .trainer-head {
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.035);
+      }
+
+      .trainer-head h2 {
+        margin-top: 5px;
+        font-size: clamp(1.25rem, 3vw, 1.8rem);
+      }
+
+      .screen {
+        display: none;
+        min-height: 560px;
+        padding: 22px;
+        max-width: 100%;
+        overflow-x: clip;
+        animation: screenIn 0.32s ease both;
+      }
+
+      .screen.is-active {
+        display: block;
+      }
+
+      .pill {
+        min-height: 30px;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0 10px;
+        border: 1px solid rgba(0, 229, 255, 0.18);
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.06);
+        font-size: 0.8rem;
+        font-weight: 900;
+      }
+
+      .pill.active {
+        color: #00151A;
+        background: var(--cyan);
+      }
+
+      .pill.locked {
+        color: #FFECA8;
+        border-color: rgba(255, 215, 0, 0.28);
+        background: rgba(255, 215, 0, 0.1);
+      }
+
+      .pill.done {
+        color: #C5FFE3;
+        border-color: rgba(0, 255, 135, 0.3);
+        background: rgba(0, 255, 135, 0.12);
+      }
+
+      .helper-text {
+        color: var(--muted);
+        line-height: 1.62;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .field label,
+      .selector-title {
+        color: var(--text);
+        font-weight: 900;
+      }
+
+      .input {
+        width: 100%;
+        min-height: 54px;
+        padding: 0 15px;
+        border: 1px solid rgba(0, 229, 255, 0.22);
+        border-radius: 16px;
+        outline: none;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .input:focus {
+        border-color: var(--cyan);
+        box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.12);
+      }
+
+      .profile-builder {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 260px;
+        gap: 18px;
+        align-items: start;
+        max-width: 100%;
+      }
+
+      .selector-block {
+        margin-top: 18px;
+      }
+
+      .choice-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .choice-btn,
+      .option-btn,
+      .quiz-option {
+        width: 100%;
+        min-height: 56px;
+        padding: 13px 15px;
+        border: 1px solid rgba(0, 229, 255, 0.18);
+        border-radius: 16px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.055);
+        cursor: pointer;
+        text-align: left;
+        font-weight: 900;
+        transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .choice-btn:hover,
+      .option-btn:hover,
+      .quiz-option:hover {
+        transform: translateY(-2px);
+        border-color: rgba(0, 229, 255, 0.62);
+        background: rgba(0, 229, 255, 0.09);
+      }
+
+      .choice-btn.is-selected,
+      .option-btn.is-selected,
+      .quiz-option.is-selected {
+        border-color: var(--cyan);
+        background: rgba(0, 229, 255, 0.12);
+        box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.18);
+      }
+
+      .aura-dot {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        border-radius: 999px;
+        margin-right: 8px;
+        vertical-align: middle;
+        box-shadow: 0 0 16px currentColor;
+      }
+
+      .preview-card {
+        position: sticky;
+        top: 96px;
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+        padding: 18px;
+        text-align: center;
+      }
+
+      .diagnostic-meter {
+        margin-bottom: 20px;
+      }
+
+      .meter-label {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 900;
+      }
+
+      .question-card,
+      .mission-card,
+      .reward-card {
+        padding: 22px;
+        border: 1px solid rgba(0, 229, 255, 0.18);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.055);
+      }
+
+      .question-card h3,
+      .mission-card h3,
+      .reward-card h3 {
+        font-size: clamp(1.35rem, 3vw, 2rem);
+        line-height: 1.16;
+      }
+
+      .option-grid,
+      .quiz-options,
+      .mission-brief {
+        display: grid;
+        gap: 11px;
+        margin-top: 18px;
+      }
+
+      .route-result {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 22px;
+        align-items: center;
+      }
+
+      .dojo-node-preview {
+        width: 184px;
+        height: 184px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto;
+        border-radius: 999px;
+        border: 1px solid currentColor;
+        color: var(--cyan);
+        background: radial-gradient(circle, color-mix(in srgb, currentColor, transparent 70%), transparent 64%);
+        box-shadow: 0 0 48px color-mix(in srgb, currentColor, transparent 45%);
+        animation: nodePulse 2.6s ease-in-out infinite;
+      }
+
+      .dojo-node-preview strong {
+        font-size: 2.8rem;
+      }
+
+      .hub-wrap {
+        position: relative;
+        min-height: 620px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 26px;
+        background:
+          radial-gradient(circle at center, rgba(0, 229, 255, 0.12), transparent 44%),
+          rgba(255, 255, 255, 0.035);
+      }
+
+      .hub-lines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .hub-line {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 34%;
+        height: 2px;
+        transform-origin: 0 50%;
+        background: linear-gradient(90deg, rgba(0, 229, 255, 0.72), transparent);
+        box-shadow: 0 0 18px rgba(0, 229, 255, 0.32);
+      }
+
+      .line-excel { transform: rotate(-135deg); }
+      .line-office { transform: rotate(-45deg); }
+      .line-ai { transform: rotate(135deg); }
+      .line-pc { transform: rotate(45deg); }
+
+      .hub-core {
+        position: relative;
+        z-index: 2;
+        width: min(310px, 80vw);
+        max-width: 100%;
+        padding: 18px;
+        text-align: center;
+      }
+
+      .hub-core .avatar-shell {
+        width: 154px;
+        height: 154px;
+      }
+
+      .hub-core .avatar-core {
+        width: 108px;
+        height: 108px;
+      }
+
+      .hub-core h3 {
+        margin-top: 10px;
+        font-size: 1.35rem;
+      }
+
+      .hub-node {
+        --dojo-color: var(--cyan);
+        position: absolute;
+        z-index: 3;
+        width: 210px;
+        max-width: calc(100% - 24px);
+        min-height: 150px;
+        padding: 16px;
+        border: 1px solid color-mix(in srgb, var(--dojo-color), transparent 44%);
+        border-radius: 22px;
+        color: var(--text);
+        background: rgba(8, 20, 34, 0.9);
+        cursor: pointer;
+        text-align: left;
+        box-shadow: 0 0 28px color-mix(in srgb, var(--dojo-color), transparent 78%);
+        transition: transform 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+      }
+
+      .hub-node:hover {
+        transform: translateY(-4px) scale(1.01);
+      }
+
+      .hub-node.is-recommended,
+      .hub-node.is-active {
+        animation: nodePulse 2.4s ease-in-out infinite;
+      }
+
+      .hub-node.is-locked {
+        opacity: 0.46;
+        filter: grayscale(0.45);
+        cursor: not-allowed;
+      }
+
+      .hub-node.is-completed {
+        border-color: rgba(0, 255, 135, 0.7);
+      }
+
+      .hub-node strong,
+      .hub-node span,
+      .hub-node small {
+        display: block;
+      }
+
+      .hub-node strong {
+        color: var(--dojo-color);
+        font-size: 1.08rem;
+      }
+
+      .hub-node span,
+      .hub-node small {
+        margin-top: 7px;
+        color: var(--muted);
+        line-height: 1.4;
+        font-size: 0.88rem;
+      }
+
+      .node-excel { left: 7%; top: 10%; }
+      .node-office { right: 7%; top: 10%; }
+      .node-ai { left: 7%; bottom: 10%; }
+      .node-pc { right: 7%; bottom: 10%; }
+
+      .brief-item {
+        padding: 16px;
+        border: 1px solid rgba(0, 229, 255, 0.14);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .brief-item strong,
+      .brief-item span {
+        display: block;
+      }
+
+      .brief-item span {
+        margin-top: 6px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .quiz-option.is-correct {
+        border-color: var(--success);
+        background: rgba(0, 255, 135, 0.13);
+        animation: answerPop 0.34s ease both;
+      }
+
+      .quiz-option.is-wrong {
+        border-color: var(--danger);
+        background: rgba(255, 77, 109, 0.13);
+        animation: answerShake 0.34s ease both;
+      }
+
+      .reward-card {
+        text-align: center;
+        display: grid;
+        gap: 16px;
+        justify-items: center;
+      }
+
+      .xp-burst {
+        width: 170px;
+        height: 170px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: #130F00;
+        background: radial-gradient(circle, #FFFFFF 0%, var(--gold) 58%, #B88900 100%);
+        box-shadow: 0 0 54px rgba(255, 215, 0, 0.42);
+        animation: xpBurst 0.8s ease both;
+      }
+
+      .xp-burst strong {
+        font-size: 2.7rem;
+        line-height: 1;
+      }
+
+      .floating-xp {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 14px;
+        border-radius: 999px;
+        color: #130F00;
+        background: var(--gold);
+        font-weight: 900;
+        box-shadow: 0 0 28px rgba(255, 215, 0, 0.48);
+        animation: floatXp 1s ease both;
+      }
+
+      .quiz-head {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .quiz-feedback {
+        margin-top: 14px;
+      }
+
+      .mission-avatar-row {
+        display: grid;
+        grid-template-columns: 132px 1fr;
+        gap: 16px;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .notice {
+        padding: 13px 15px;
+        border: 1px solid rgba(255, 215, 0, 0.28);
+        border-radius: 16px;
+        color: #FFECA8;
+        background: rgba(255, 215, 0, 0.1);
+        line-height: 1.45;
+        font-weight: 900;
+      }
+
+      .actions-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .progress-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .progress-card {
+        min-height: 170px;
+        padding: 17px;
+      }
+
+      .progress-card strong,
+      .progress-card span {
+        display: block;
+      }
+
+      .progress-card span {
+        margin-top: 8px;
+        color: var(--muted);
+        line-height: 1.45;
+        font-size: 0.9rem;
+      }
+
+      .footer {
+        padding: 28px 0 42px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .is-hidden {
+        display: none !important;
+      }
+
+      @keyframes gridDrift {
+        from { background-position: 0 0; }
+        to { background-position: 54px 54px; }
+      }
+
+      @keyframes energySweep {
+        from { opacity: 0.42; transform: translateX(-4%); }
+        to { opacity: 0.8; transform: translateX(4%); }
+      }
+
+      @keyframes ringSpin {
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes counterSpin {
+        to { transform: rotate(-360deg); }
+      }
+
+      @keyframes pulseButton {
+        0%, 100% { box-shadow: 0 0 26px rgba(0, 229, 255, 0.32); }
+        50% { box-shadow: 0 0 48px rgba(0, 229, 255, 0.64); }
+      }
+
+      @keyframes avatarFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-7px); }
+      }
+
+      @keyframes screenIn {
+        from { opacity: 0; transform: translateY(12px) scale(0.99); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      @keyframes nodePulse {
+        0%, 100% { box-shadow: 0 0 24px color-mix(in srgb, var(--dojo-color, var(--cyan)), transparent 70%); }
+        50% { box-shadow: 0 0 48px color-mix(in srgb, var(--dojo-color, var(--cyan)), transparent 40%); }
+      }
+
+      @keyframes answerPop {
+        0% { transform: scale(0.98); }
+        100% { transform: scale(1); }
+      }
+
+      @keyframes answerShake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+      }
+
+      @keyframes xpBurst {
+        from { opacity: 0; transform: scale(0.75) rotate(-8deg); }
+        to { opacity: 1; transform: scale(1) rotate(0); }
+      }
+
+      @keyframes avatarThink {
+        0%, 100% { transform: translateY(0) rotate(0); }
+        50% { transform: translateY(-3px) rotate(1.5deg); }
+      }
+
+      @keyframes avatarCelebrate {
+        0% { transform: translateY(0) scale(1); }
+        35% { transform: translateY(-18px) scale(1.08); }
+        70% { transform: translateY(4px) scale(0.98); }
+        100% { transform: translateY(0) scale(1); }
+      }
+
+      @keyframes floatXp {
+        from { opacity: 0; transform: translateY(16px) scale(0.9); }
+        to { opacity: 1; transform: translateY(-4px) scale(1); }
+      }
+
+      @media (max-width: 1080px) {
+        .hero-grid,
+        .app-stage,
+        .profile-builder,
+        .route-result {
+          grid-template-columns: 1fr;
+        }
+
+        .preview-card {
+          position: static;
+        }
+
+        .progress-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .hub-wrap {
+          min-height: 780px;
+        }
+
+        .hub-node {
+          width: min(260px, 42vw);
+        }
+
+        .avatar-choice {
+          grid-template-columns: 78px 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        html {
+          scroll-padding-top: 132px;
+        }
+
+        body::before {
+          opacity: 0.34;
+          background-size: 72px 72px;
+        }
+
+        body::after {
+          animation: none;
+          opacity: 0.36;
+        }
+
+        .container {
+          width: calc(100% - 20px);
+          max-width: 100%;
+        }
+
+        .topbar {
+          background: rgba(8, 9, 12, 0.94);
+          backdrop-filter: none;
+        }
+
+        .topbar-inner,
+        .trainer-head {
+          align-items: stretch;
+          flex-direction: column;
+          gap: 12px;
+          padding: 12px 0;
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .nav-actions {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          width: 100%;
+          justify-content: stretch;
+          gap: 8px;
+        }
+
+        .nav-link,
+        .nav-actions .btn {
+          width: 100%;
+          min-height: 44px;
+          padding: 0 10px;
+          font-size: 1rem;
+          text-align: center;
+          white-space: normal;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 28px 0;
+        }
+
+        .hero-terminal,
+        .status-card,
+        .glass-card,
+        .panel {
+          max-width: 100%;
+          backdrop-filter: none;
+          box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+        }
+
+        .hero-terminal::before {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: clamp(1.9rem, 9vw, 3rem);
+          line-height: 1.05;
+        }
+
+        .hero-copy {
+          font-size: 1rem;
+        }
+
+        .status-grid,
+        .profile-readout,
+        .choice-grid,
+        .quiz-head,
+        .mission-avatar-row,
+        .progress-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .choice-btn,
+        .option-btn,
+        .quiz-option,
+        .btn {
+          min-height: 52px;
+          font-size: 1rem;
+          overflow-wrap: anywhere;
+        }
+
+        .avatar-choice {
+          min-height: 118px;
+          grid-template-columns: 78px 1fr;
+          padding: 12px;
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .avatar-shell {
+          width: min(142px, 42vw);
+          height: min(142px, 42vw);
+          box-shadow: 0 0 24px color-mix(in srgb, var(--aura), transparent 58%);
+        }
+
+        .avatar-core {
+          width: min(108px, 32vw);
+          height: min(108px, 32vw);
+        }
+
+        .avatar-img {
+          width: 90%;
+          height: 90%;
+        }
+
+        .avatar-shell::after {
+          opacity: 0.42;
+          box-shadow:
+            -86px 54px 0 -4px color-mix(in srgb, var(--aura), transparent 28%),
+            -52px -8px 0 -5px #FFFFFF;
+        }
+
+        .avatar-shell.is-celebrate {
+          animation-duration: 0.62s;
+        }
+
+        .avatar-shell.is-celebrate::after {
+          box-shadow:
+            -88px 54px 0 -3px var(--gold),
+            -52px -8px 0 -4px #FFFFFF,
+            4px 92px 0 -4px var(--cyan);
+        }
+
+        .gate-ring,
+        .gate-logo {
+          animation-duration: 28s;
+        }
+
+        .btn-pulse,
+        .hub-node.is-recommended,
+        .hub-node.is-active,
+        .dojo-node-preview {
+          animation-duration: 4s;
+        }
+
+        .hub-node {
+          box-shadow: 0 0 16px color-mix(in srgb, var(--dojo-color), transparent 82%);
+        }
+
+        .xp-burst {
+          box-shadow: 0 0 28px rgba(255, 215, 0, 0.3);
+          animation-duration: 0.55s;
+        }
+
+        .floating-xp {
+          box-shadow: 0 0 18px rgba(255, 215, 0, 0.34);
+          animation-duration: 0.7s;
+        }
+
+        .screen {
+          min-height: auto;
+          padding: 16px;
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .side-console,
+        .question-card,
+        .mission-card,
+        .reward-card {
+          padding: 16px;
+        }
+
+        .hub-wrap {
+          display: block;
+          min-height: auto;
+          padding: 16px;
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .hub-lines {
+          display: none;
+        }
+
+        .hub-core,
+        .hub-node {
+          position: relative;
+          width: 100%;
+          max-width: 100%;
+          left: auto;
+          right: auto;
+          top: auto;
+          bottom: auto;
+          margin-bottom: 12px;
+          transform: none;
+        }
+
+        .hub-node:hover {
+          transform: none;
+        }
+
+        .xp-burst {
+          width: min(150px, 52vw);
+          height: min(150px, 52vw);
+        }
+
+        .route-result {
+          gap: 16px;
+        }
+
+        .dojo-node-preview {
+          width: min(160px, 54vw);
+          height: min(160px, 54vw);
+        }
+
+        .hero-actions .btn,
+        .actions-row .btn,
+        .reward-card .btn {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .brand-sub {
+          display: none;
+        }
+
+        .brand-logo {
+          width: 48px;
+          height: 48px;
+        }
+
+        .nav-actions {
+          grid-template-columns: 1fr;
+        }
+
+        .hero h1 {
+          font-size: clamp(1.75rem, 10vw, 2.55rem);
+        }
+
+        .dojo-gate {
+          min-height: 320px;
+        }
+
+        .gate-ring {
+          width: 204px;
+          height: 204px;
+        }
+
+        .gate-logo {
+          width: 98px;
+          height: 98px;
+        }
+
+        .gate-logo img {
+          width: 78px;
+          height: 78px;
+        }
+
+        .avatar-choice {
+          grid-template-columns: 70px 1fr;
+        }
+
+        .avatar-shell.avatar-mini {
+          width: 68px;
+          height: 68px;
+        }
+
+        .avatar-shell.avatar-mini .avatar-core {
+          width: 52px;
+          height: 52px;
+        }
+
+        .avatar-shell.avatar-mini .avatar-img {
+          width: 48px;
+          height: 48px;
+        }
+
+        .choice-btn,
+        .option-btn,
+        .quiz-option {
+          padding: 12px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.001ms !important;
+        }
+
+        body::before,
+        body::after {
+          animation: none !important;
+        }
+
+        .avatar-shell,
+        .gate-ring,
+        .gate-logo,
+        .btn-pulse,
+        .hub-node,
+        .dojo-node-preview {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand">
+            <div class="brand-logo">
+              <img src="https://drive.google.com/thumbnail?id=1b5F20OL-tsd3BKz3Egv6TbLdeQKoBx6v&sz=w384" alt="SkillDojo" width="54" height="54" decoding="async">
+            </div>
+            <div>
+              <strong class="brand-name"><span>Skill</span>Dojo</strong>
+              <span class="brand-sub">Cyber Dojo de habilidades digitales</span>
+            </div>
+          </div>
+
+          <nav class="nav-actions" aria-label="Navegacion principal">
+            <a class="nav-link" href="#arena">Arena</a>
+            <a class="nav-link" href="#progreso">Progreso</a>
+            <button class="btn btn-outline" type="button" data-action="reset">Reiniciar</button>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" id="entrada">
+          <div class="container hero-grid">
+            <div>
+              <span class="eyebrow">Cyber Dojo V4 &middot; Neo-Karate Tech</span>
+              <h1>Convierte tus habilidades digitales en <span>poder profesional</span>.</h1>
+              <p class="hero-copy">
+                Hacemos que aprender habilidades digitales sea practico, breve y gamificado,
+                impulsando la productividad, la empleabilidad y el crecimiento profesional.
+              </p>
+              <div class="hero-actions">
+                <a class="btn btn-primary btn-pulse" href="#arena" data-action="start">Iniciar entrenamiento</a>
+                <a class="btn btn-outline" href="#progreso">Ver progreso</a>
+              </div>
+              <div class="status-grid">
+                <div class="status-card">
+                  <strong>Perfil vivo</strong>
+                  <span>Crea tu aprendiz digital y personaliza su energia.</span>
+                </div>
+                <div class="status-card">
+                  <strong>Ruta obligatoria</strong>
+                  <span>El diagnostico desbloquea un unico dojo inicial.</span>
+                </div>
+                <div class="status-card">
+                  <strong>XP + cinturon</strong>
+                  <span>Completa misiones y abre nuevas rutas.</span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="hero-terminal">
+              <div class="dojo-gate">
+                <div class="gate-ring">
+                  <div class="gate-logo">
+                    <img src="https://drive.google.com/thumbnail?id=1b5F20OL-tsd3BKz3Egv6TbLdeQKoBx6v&sz=w384" alt="SkillDojo" width="92" height="92" decoding="async">
+                  </div>
+                </div>
+                <div class="gate-caption">
+                  <span class="pill active">Arena lista</span>
+                  <p class="helper-text">Tu entrenamiento comienza ahora. Entra, crea tu avatar y desbloquea tu primer dojo.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section" id="arena">
+          <div class="container app-stage">
+            <aside class="panel side-console">
+              <div class="mini-profile">
+                <div id="sideAvatar"></div>
+                <div class="profile-readout">
+                  <div class="readout">
+                    <strong id="profileName">Nuevo aprendiz</strong>
+                    <span>Perfil</span>
+                  </div>
+                  <div class="readout">
+                    <strong id="beltName">Cinturon Blanco</strong>
+                    <span>Rango</span>
+                  </div>
+                  <div class="readout">
+                    <strong id="xpTotal">0 XP</strong>
+                    <span>Energia</span>
+                  </div>
+                  <div class="readout">
+                    <strong id="missionCount">0/4</strong>
+                    <span>Misiones</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="meter-label">
+                    <span>Progreso de cinturon</span>
+                    <span id="beltPercent">0%</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" id="xpFill"></div>
+                  </div>
+                </div>
+                <div class="notice" id="routeNotice">Crea tu aprendiz digital para entrar a la arena.</div>
+              </div>
+            </aside>
+
+            <section class="panel trainer" aria-live="polite">
+              <div class="trainer-head">
+                <div>
+                  <span class="eyebrow" id="screenKicker">Entrada</span>
+                  <h2 id="screenTitle">Crea tu aprendiz digital</h2>
+                </div>
+                <span class="pill active" id="screenStep">Paso 1 de 8</span>
+              </div>
+
+              <div class="screen is-active" id="screenProfile">
+                <div class="profile-builder">
+                  <div>
+                    <p class="helper-text">
+                      Personaliza tu aprendiz dojo tech. Tu nombre, avatar, aura y estilo se guardan localmente
+                      para que el progreso sobreviva al recargar la pagina.
+                    </p>
+                    <div class="field">
+                      <label for="learnerName">Nombre del aprendiz</label>
+                      <input class="input" id="learnerName" type="text" maxlength="32" placeholder="Ejemplo: Tony">
+                    </div>
+
+                    <div class="selector-block">
+                      <div class="selector-title">Avatar base</div>
+                      <div class="choice-grid" id="avatarChoices"></div>
+                    </div>
+
+                    <div class="selector-block">
+                      <div class="selector-title">Aura de energia</div>
+                      <div class="choice-grid" id="auraChoices"></div>
+                    </div>
+
+                    <div class="selector-block">
+                      <div class="selector-title">Estilo de entrenamiento</div>
+                      <div class="choice-grid" id="styleChoices"></div>
+                    </div>
+
+                    <div class="actions-row">
+                      <button class="btn btn-primary" type="button" data-action="saveProfile">Crear mi aprendiz</button>
+                    </div>
+                  </div>
+
+                  <aside class="glass-card preview-card">
+                    <span class="eyebrow">Vista previa viva</span>
+                    <div id="profilePreview"></div>
+                    <strong id="previewName">Aprendiz SkillDojo</strong>
+                    <p class="helper-text" id="previewStyle">Calmado &middot; Aura Turquesa</p>
+                  </aside>
+                </div>
+              </div>
+
+              <div class="screen" id="screenDiagnostic">
+                <div class="diagnostic-meter">
+                  <div class="meter-label">
+                    <span id="diagnosticStepLabel">Pregunta 1 de 4</span>
+                    <span id="diagnosticPercent">25%</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" id="diagnosticFill"></div>
+                  </div>
+                </div>
+                <div class="question-card" id="diagnosticQuestion"></div>
+                <div class="notice is-hidden" id="diagnosticAlert">Elige una respuesta para avanzar.</div>
+                <div class="actions-row">
+                  <button class="btn btn-outline" type="button" data-action="prevDiagnostic">Anterior</button>
+                  <button class="btn btn-primary" type="button" data-action="nextDiagnostic">Avanzar</button>
+                </div>
+              </div>
+
+              <div class="screen" id="screenRouteResult">
+                <div class="route-result">
+                  <div>
+                    <div id="routeAvatar"></div>
+                  </div>
+                  <div id="routeResultContent"></div>
+                </div>
+              </div>
+
+              <div class="screen" id="screenHub">
+                <div class="hub-wrap">
+                  <div class="hub-lines">
+                    <div class="hub-line line-excel"></div>
+                    <div class="hub-line line-office"></div>
+                    <div class="hub-line line-ai"></div>
+                    <div class="hub-line line-pc"></div>
+                  </div>
+                  <div class="hub-core glass-card">
+                    <div id="hubAvatar"></div>
+                    <h3 id="hubName">Aprendiz SkillDojo</h3>
+                    <p class="helper-text"><span id="hubXp">0 XP</span> &middot; <span id="hubBelt">Cinturon Blanco</span></p>
+                    <div class="progress-track" style="margin-top:12px;">
+                      <div class="progress-fill" id="hubFill"></div>
+                    </div>
+                  </div>
+                  <div id="hubNodes"></div>
+                </div>
+                <div class="notice is-hidden" id="hubAlert">Completa primero tu mision recomendada para desbloquear nuevas rutas.</div>
+                <div class="actions-row">
+                  <button class="btn btn-primary" type="button" data-action="chooseDojo">Entrar al dojo activo</button>
+                </div>
+              </div>
+
+              <div class="screen" id="screenMission">
+                <div class="mission-card" id="missionContent"></div>
+                <div class="actions-row">
+                  <button class="btn btn-primary" type="button" data-action="startQuiz">Resolver reto</button>
+                  <button class="btn btn-outline" type="button" data-action="backHub">Volver al Hub</button>
+                </div>
+              </div>
+
+              <div class="screen" id="screenQuiz">
+                <div class="question-card" id="quizContent"></div>
+                <div class="notice is-hidden" id="quizAlert">Selecciona una respuesta antes de enviar.</div>
+                <div class="actions-row">
+                  <button class="btn btn-gold" type="button" data-action="submitQuiz">Enviar respuesta</button>
+                  <button class="btn btn-outline" type="button" data-action="backMission">Volver a la mision</button>
+                </div>
+              </div>
+
+              <div class="screen" id="screenReward">
+                <div class="reward-card" id="rewardContent"></div>
+                <div class="actions-row">
+                  <button class="btn btn-primary" type="button" data-action="backHub">Volver al Hub</button>
+                  <a class="btn btn-outline" href="#progreso">Ver progreso</a>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="section" id="progreso">
+          <div class="container">
+            <div class="trainer-head panel" style="margin-bottom:14px;">
+              <div>
+                <span class="eyebrow">Progreso</span>
+                <h2>Tu mapa de entrenamiento digital</h2>
+              </div>
+              <div id="progressAvatar"></div>
+              <button class="btn btn-outline" type="button" data-action="reset">Reiniciar progreso</button>
+            </div>
+            <div class="progress-grid" id="progressGrid"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="container">SkillDojo Cyber Dojo V4 &middot; Conviertete en un sensei digital.</div>
+      </footer>
+    </div>
+
+    <script>
+      const STORAGE_KEY = 'skilldojo_cyber_dojo_v4';
+
+      const avatarBases = [
+        {
+          id: 'zorro',
+          name: 'Zorro Dojo',
+          tone: 'Rapido, astuto y enfocado.',
+          image: 'https://drive.google.com/thumbnail?id=1Y_iDxs_zPYQpA-doCq4a1CJjwWBt3LEu&sz=w384'
+        },
+        {
+          id: 'dragon',
+          name: 'Dragon Digital',
+          tone: 'Energia alta y poder de avance.',
+          image: 'https://drive.google.com/thumbnail?id=1MuTgpMp6aWkLw4fj7upBHynEh9iGEJ1L&sz=w384'
+        },
+        {
+          id: 'buho',
+          name: 'Buho Sensei',
+          tone: 'Analitico, sabio y estrategico.',
+          image: 'https://drive.google.com/thumbnail?id=1A1qX_QEYP-Fbt18mziTmKa2jCQyKVjUS&sz=w384'
+        },
+        {
+          id: 'ninja',
+          name: 'Ninja Tech',
+          tone: 'Agil, competitivo y preciso.',
+          image: 'https://drive.google.com/thumbnail?id=18_QaeBDKgokQafjfqBCvPwXQOlhP5WW7&sz=w384'
+        },
+        {
+          id: 'panda',
+          name: 'Panda Trainer',
+          tone: 'Fuerte, constante y cercano.',
+          image: 'https://drive.google.com/thumbnail?id=1Au1tLqqd_LH6a1vL6Ou2gCnTYHAX-UwJ&sz=w384'
+        }
+      ];
+
+      const auraOptions = [
+        { id: 'turquesa', name: 'Turquesa', color: '#00A791' },
+        { id: 'cyan', name: 'Cyan', color: '#00E5FF' },
+        { id: 'morado', name: 'Morado', color: '#7B2CBF' },
+        { id: 'dorado', name: 'Dorado', color: '#FFD700' },
+        { id: 'verde', name: 'Verde', color: '#00FF87' }
+      ];
+
+      const styleOptions = [
+        { id: 'calmado', name: 'Calmado' },
+        { id: 'competitivo', name: 'Competitivo' },
+        { id: 'cinematico', name: 'Cinematico' }
+      ];
+
+      const dojos = [
+        {
+          id: 'excel',
+          short: 'XL',
+          name: 'Excel Dojo',
+          color: '#00FF87',
+          positionClass: 'node-excel',
+          focus: 'Datos, formulas, orden y analisis',
+          description: 'Entrena Excel y Google Sheets para limpiar bases, cruzar informacion y crear indicadores utiles.',
+          why: 'Tu diagnostico muestra que fortalecer datos y hojas de calculo puede darte impacto rapido.',
+          reward: 'Insignia Formula Inicial',
+          mission: {
+            title: 'Ordena una base antes de medir',
+            goal: 'Detectar el primer paso correcto antes de analizar datos.',
+            scenario: 'Recibes una lista de postulantes con duplicados, fechas mezcladas y campos incompletos.',
+            task: 'Decide que accion evita errores antes de construir indicadores.',
+            xp: 50,
+            question: 'Que haces primero para trabajar con criterio?',
+            options: [
+              'Crear graficos de inmediato para ver tendencias.',
+              'Revisar encabezados, tipos de dato, vacios y duplicados antes de calcular.',
+              'Eliminar columnas sin leerlas para que la base se vea mas corta.'
+            ],
+            answer: 1,
+            feedback: 'Buen criterio: antes de medir, validas la calidad de la base.'
+          }
+        },
+        {
+          id: 'office',
+          short: 'OF',
+          name: 'Office Dojo',
+          color: '#00E5FF',
+          positionClass: 'node-office',
+          focus: 'Entregables claros y productividad',
+          description: 'Crea documentos, presentaciones e informes breves que ayuden a decidir y comunicar mejor.',
+          why: 'Tu diagnostico sugiere que puedes ganar productividad mejorando entregables de oficina.',
+          reward: 'Insignia Presentacion Clara',
+          mission: {
+            title: 'Arma un informe ejecutivo',
+            goal: 'Elegir una estructura clara para comunicar resultados.',
+            scenario: 'Necesitas resumir resultados de capacitacion para que un lider revise avances en cinco minutos.',
+            task: 'Elige la estructura mas util para tomar decisiones.',
+            xp: 50,
+            question: 'Que estructura funciona mejor?',
+            options: [
+              'Portada, resumen, indicadores clave, riesgos y siguientes acciones.',
+              'Un bloque largo de texto sin subtitulos.',
+              'Solo capturas de pantalla sin explicacion.'
+            ],
+            answer: 0,
+            feedback: 'Correcto: un entregable claro reduce tiempo y mejora decisiones.'
+          }
+        },
+        {
+          id: 'ai',
+          short: 'AI',
+          name: 'AI Dojo',
+          color: '#7B2CBF',
+          positionClass: 'node-ai',
+          focus: 'Prompts, estudio, trabajo y productividad',
+          description: 'Usa inteligencia artificial para estudiar, redactar, resumir y producir mejor sin perder criterio.',
+          why: 'Tu diagnostico indica que aprender a pedirle mejor a la IA puede acelerar tu trabajo.',
+          reward: 'Insignia Prompt Practico',
+          mission: {
+            title: 'Crea un prompt con poder',
+            goal: 'Reconocer un pedido claro para obtener una respuesta util.',
+            scenario: 'Quieres que una IA te ayude a resumir una lectura universitaria y preparar una exposicion.',
+            task: 'Elige el prompt con mejor contexto, tarea y formato.',
+            xp: 50,
+            question: 'Cual prompt tiene mas calidad?',
+            options: [
+              'Resume esto.',
+              'Hazlo bonito y rapido.',
+              'Resume este texto en 5 ideas, explica cada una simple y agrega 3 preguntas para exposicion.'
+            ],
+            answer: 2,
+            feedback: 'Exacto: un buen prompt define tarea, contexto y salida esperada.'
+          }
+        },
+        {
+          id: 'pc',
+          short: 'PC',
+          name: 'PC Dojo',
+          color: '#FF9F1C',
+          positionClass: 'node-pc',
+          focus: 'Autonomia digital y orden',
+          description: 'Mejora manejo de archivos, instalaciones seguras, organizacion y mantenimiento basico.',
+          why: 'Tu diagnostico muestra que ordenar tu entorno digital puede darte mas autonomia y seguridad.',
+          reward: 'Insignia Orden Digital',
+          mission: {
+            title: 'Ordena tu espacio digital',
+            goal: 'Elegir una practica segura para encontrar y proteger archivos importantes.',
+            scenario: 'Tienes CVs, reportes y formatos mezclados en Descargas antes de enviarlos.',
+            task: 'Selecciona la accion mas segura y profesional.',
+            xp: 50,
+            question: 'Que accion conviene mas?',
+            options: [
+              'Crear carpetas por proceso, usar nombres claros y hacer copia de seguridad.',
+              'Guardar todo en el escritorio sin cambiar nombres.',
+              'Descargar instaladores desconocidos para abrir cualquier archivo.'
+            ],
+            answer: 0,
+            feedback: 'Correcto: orden, nombres claros y respaldo reducen errores.'
+          }
+        }
+      ];
+
+      const diagnosticQuestions = [
+        {
+          id: 'spreadsheet',
+          text: 'Mision de diagnostico: cuando recibes una base en Excel o Sheets...',
+          answers: [
+            { text: 'Necesito ordenar, limpiar y entender mejor los datos.', dojo: 'excel', points: 4 },
+            { text: 'Uso filtros y algunas formulas, pero quiero mas seguridad.', dojo: 'excel', points: 3 },
+            { text: 'Ya analizo indicadores con cierta confianza.', dojo: 'excel', points: 1 }
+          ]
+        },
+        {
+          id: 'documents',
+          text: 'Cuando preparas informes o presentaciones...',
+          answers: [
+            { text: 'Me cuesta estructurar ideas y hacer entregables claros.', dojo: 'office', points: 4 },
+            { text: 'Puedo avanzar, pero necesito mejor orden visual.', dojo: 'office', points: 3 },
+            { text: 'Tengo una estructura clara y comunico bien.', dojo: 'office', points: 1 }
+          ]
+        },
+        {
+          id: 'ai',
+          text: 'Cuando usas inteligencia artificial para estudiar o trabajar...',
+          answers: [
+            { text: 'Quiero aprender desde cero y usarla con criterio.', dojo: 'ai', points: 4 },
+            { text: 'La uso, pero mis prompts son muy generales.', dojo: 'ai', points: 3 },
+            { text: 'Ya puedo pedir resultados con contexto y formato.', dojo: 'ai', points: 1 }
+          ]
+        },
+        {
+          id: 'pc',
+          text: 'Sobre archivos, computadora y seguridad basica...',
+          answers: [
+            { text: 'Necesito mas orden y autonomia digital.', dojo: 'pc', points: 4 },
+            { text: 'Me defiendo, pero puedo trabajar con mas metodo.', dojo: 'pc', points: 3 },
+            { text: 'Trabajo con orden y cuidado regularmente.', dojo: 'pc', points: 1 }
+          ]
+        }
+      ];
+
+      function createDefaultState() {
+        return {
+          name: '',
+          avatarBase: 'ninja',
+          aura: 'turquesa',
+          style: 'calmado',
+          xp: 0,
+          recommendedDojo: '',
+          selectedDojo: '',
+          completed: {},
+          diagnosticDone: false,
+          diagnosticIndex: 0,
+          diagnosticAnswers: {},
+          quizIndex: 0,
+          quizAnswers: [],
+          routesUnlocked: false,
+          lastScore: null
+        };
+      }
+
+      let state = loadState();
+      let selectedQuizOption = null;
+
+      const screens = {
+        profile: document.getElementById('screenProfile'),
+        diagnostic: document.getElementById('screenDiagnostic'),
+        routeResult: document.getElementById('screenRouteResult'),
+        hub: document.getElementById('screenHub'),
+        mission: document.getElementById('screenMission'),
+        quiz: document.getElementById('screenQuiz'),
+        reward: document.getElementById('screenReward')
+      };
+
+      const screenMeta = {
+        profile: ['Perfil', 'Crea tu aprendiz digital', 'Paso 1 de 8'],
+        diagnostic: ['Diagnostico', 'La arena decide tu primera ruta', 'Paso 2 de 8'],
+        routeResult: ['Desbloqueo', 'Tu dojo inicial esta listo', 'Paso 3 de 8'],
+        hub: ['Dojo Hub', 'Mapa de entrenamiento', 'Paso 4 de 8'],
+        mission: ['Mision', 'Completa esta mision para desbloquear rutas', 'Paso 5 de 8'],
+        quiz: ['Reto', 'Resuelve el desafio', 'Paso 6 de 8'],
+        reward: ['Recompensa', 'Mision completada', 'Paso 7 de 8']
+      };
+
+      document.addEventListener('DOMContentLoaded', init);
+
+      function init() {
+        bindActions();
+        renderAvatarSelectors();
+        hydrateProfileForm();
+        renderAvatarEverywhere();
+        renderDiagnosticQuestion();
+        updateDashboard();
+        showInitialScreen();
+      }
+
+      function bindActions() {
+        document.body.addEventListener('click', function(event) {
+          const target = event.target.closest('[data-action]');
+          if (!target) return;
+
+          const actions = {
+            start: showInitialScreen,
+            saveProfile: saveProfile,
+            prevDiagnostic: prevDiagnostic,
+            nextDiagnostic: nextDiagnostic,
+            enterHub: enterHub,
+            chooseDojo: chooseDojo,
+            backHub: function() { renderHub(); showScreen('hub'); },
+            startQuiz: startQuiz,
+            backMission: function() { showScreen('mission'); },
+            submitQuiz: submitQuiz,
+            reset: resetTraining
+          };
+
+          const action = actions[target.dataset.action];
+          if (action) action();
+        });
+
+        document.getElementById('learnerName').addEventListener('input', function(event) {
+          state.name = event.target.value.trim();
+          renderAvatarEverywhere();
+        });
+      }
+
+      function loadState() {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          return saved ? Object.assign(createDefaultState(), JSON.parse(saved)) : createDefaultState();
+        } catch (error) {
+          return createDefaultState();
+        }
+      }
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        updateDashboard();
+      }
+
+      function showInitialScreen() {
+        if (!state.name) {
+          showScreen('profile');
+          return;
+        }
+        if (!state.diagnosticDone) {
+          showScreen('diagnostic');
+          return;
+        }
+        renderHub();
+        showScreen('hub');
+      }
+
+      function renderAvatarSelectors() {
+        document.getElementById('avatarChoices').innerHTML = avatarBases.map(function(item) {
+          return `
+            <button class="choice-btn avatar-choice" type="button" data-avatar-base="${item.id}">
+              ${renderAvatar(item.id, state.aura, state.style, 'idle', 'avatar-mini')}
+              <span>
+                <strong>${item.name}</strong>
+                <span>${item.tone}</span>
+              </span>
+            </button>
+          `;
+        }).join('');
+
+        document.getElementById('auraChoices').innerHTML = auraOptions.map(function(item) {
+          return `<button class="choice-btn" type="button" data-aura="${item.id}"><span class="aura-dot" style="color:${item.color};background:${item.color};"></span>${item.name}</button>`;
+        }).join('');
+
+        document.getElementById('styleChoices').innerHTML = styleOptions.map(function(item) {
+          return `<button class="choice-btn" type="button" data-style="${item.id}">${item.name}</button>`;
+        }).join('');
+
+        document.querySelectorAll('[data-avatar-base]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            state.avatarBase = button.dataset.avatarBase;
+            saveState();
+            renderAvatarSelectors();
+            renderAvatarEverywhere();
+          });
+        });
+
+        document.querySelectorAll('[data-aura]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            state.aura = button.dataset.aura;
+            saveState();
+            renderAvatarSelectors();
+            renderAvatarEverywhere();
+          });
+        });
+
+        document.querySelectorAll('[data-style]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            state.style = button.dataset.style;
+            saveState();
+            renderAvatarSelectors();
+            renderAvatarEverywhere();
+          });
+        });
+
+        markSelected('[data-avatar-base]', state.avatarBase, 'avatarBase');
+        markSelected('[data-aura]', state.aura, 'aura');
+        markSelected('[data-style]', state.style, 'style');
+      }
+
+      function markSelected(selector, value, key) {
+        document.querySelectorAll(selector).forEach(function(button) {
+          button.classList.toggle('is-selected', button.dataset[key] === value);
+        });
+      }
+
+      function hydrateProfileForm() {
+        document.getElementById('learnerName').value = state.name || '';
+      }
+
+      function saveProfile() {
+        const input = document.getElementById('learnerName');
+        state.name = input.value.trim() || 'Aprendiz SkillDojo';
+        saveState();
+        showScreen('diagnostic');
+      }
+
+      function avatarHtml(sizeClass, visualState) {
+        return renderAvatar(state.avatarBase, state.aura, state.style, visualState || 'idle', sizeClass || '');
+      }
+
+      function renderAvatar(avatarType, auraId, styleMode, avatarState, sizeClass) {
+        const base = getAvatarBase(avatarType);
+        const aura = getAura(auraId);
+        const style = getStyle(styleMode);
+        const stateClass = avatarState ? ` is-${avatarState}` : '';
+        const styleClass = ` style-${style.id}`;
+        return `
+          <div class="avatar-shell ${sizeClass || ''}${stateClass}${styleClass}" style="--aura:${aura.color};" aria-label="${base.name}">
+            <div class="avatar-core">
+              <img
+                class="avatar-img"
+                src="${base.image}"
+                alt="${base.name}"
+                width="128"
+                height="128"
+                loading="lazy"
+                decoding="async"
+                onerror="this.parentElement.classList.add('has-avatar-error'); this.remove();"
+              >
+            </div>
+            <div class="avatar-base">${style.name}</div>
+          </div>
+        `;
+      }
+
+      function renderAvatarEverywhere() {
+        const displayName = state.name || 'Aprendiz SkillDojo';
+        const aura = getAura(state.aura);
+        const style = getStyle(state.style);
+        const currentScreen = Object.keys(screens).find(function(key) {
+          return screens[key].classList.contains('is-active');
+        });
+        const visualState = currentScreen === 'diagnostic' || currentScreen === 'quiz'
+          ? 'thinking'
+          : currentScreen === 'reward'
+            ? 'celebrate'
+            : 'idle';
+        const targets = ['profilePreview', 'sideAvatar', 'routeAvatar', 'hubAvatar', 'progressAvatar'];
+        targets.forEach(function(id) {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = avatarHtml('', visualState);
+        });
+        document.getElementById('previewName').textContent = displayName;
+        document.getElementById('previewStyle').textContent = `${style.name} · Aura ${aura.name}`;
+      }
+
+      function renderDiagnosticQuestion() {
+        const index = state.diagnosticIndex || 0;
+        const question = diagnosticQuestions[index];
+        const selected = state.diagnosticAnswers[question.id];
+        const percent = Math.round(((index + 1) / diagnosticQuestions.length) * 100);
+
+        document.getElementById('diagnosticStepLabel').textContent = `Pregunta ${index + 1} de ${diagnosticQuestions.length}`;
+        document.getElementById('diagnosticPercent').textContent = `${percent}%`;
+        document.getElementById('diagnosticFill').style.width = `${percent}%`;
+        document.getElementById('diagnosticQuestion').innerHTML = `
+          <span class="eyebrow">Mision de escaneo</span>
+          <h3 style="margin-top:14px;">${question.text}</h3>
+          <p class="helper-text" style="margin-top:8px;">Responde con honestidad. El sistema abrira tu primer dojo obligatorio.</p>
+          <div class="option-grid">
+            ${question.answers.map(function(answer, idx) {
+              const active = selected === idx ? ' is-selected' : '';
+              return `<button class="option-btn${active}" type="button" data-diagnostic-option="${idx}">${answer.text}</button>`;
+            }).join('')}
+          </div>
+        `;
+
+        document.querySelectorAll('[data-diagnostic-option]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            state.diagnosticAnswers[question.id] = Number(button.dataset.diagnosticOption);
+            saveState();
+            renderDiagnosticQuestion();
+            document.getElementById('diagnosticAlert').classList.add('is-hidden');
+          });
+        });
+      }
+
+      function nextDiagnostic() {
+        const question = diagnosticQuestions[state.diagnosticIndex];
+        if (typeof state.diagnosticAnswers[question.id] !== 'number') {
+          document.getElementById('diagnosticAlert').classList.remove('is-hidden');
+          return;
+        }
+        document.getElementById('diagnosticAlert').classList.add('is-hidden');
+
+        if (state.diagnosticIndex < diagnosticQuestions.length - 1) {
+          state.diagnosticIndex += 1;
+          saveState();
+          renderDiagnosticQuestion();
+          return;
+        }
+        finishDiagnostic();
+      }
+
+      function prevDiagnostic() {
+        if (state.diagnosticIndex === 0) return;
+        state.diagnosticIndex -= 1;
+        saveState();
+        renderDiagnosticQuestion();
+      }
+
+      function finishDiagnostic() {
+        const scores = { excel: 0, office: 0, ai: 0, pc: 0 };
+        diagnosticQuestions.forEach(function(question) {
+          const answer = question.answers[state.diagnosticAnswers[question.id]];
+          scores[answer.dojo] += answer.points;
+        });
+
+        state.recommendedDojo = Object.keys(scores).sort(function(a, b) {
+          if (scores[b] === scores[a]) return a.localeCompare(b);
+          return scores[b] - scores[a];
+        })[0];
+        state.selectedDojo = state.recommendedDojo;
+        state.diagnosticDone = true;
+        state.routesUnlocked = isRecommendedCompleted();
+        saveState();
+        renderRouteResult();
+        showScreen('routeResult');
+      }
+
+      function renderRouteResult() {
+        const dojo = getDojo(state.recommendedDojo);
+        document.getElementById('routeResultContent').innerHTML = `
+          <span class="eyebrow">Desbloqueo inicial</span>
+          <h3 style="margin-top:14px;font-size:clamp(1.6rem,4vw,2.6rem);">Tu dojo inicial es: <span style="color:${dojo.color};">${dojo.name}</span></h3>
+          <p class="helper-text" style="margin-top:12px;">${dojo.why}</p>
+          <div class="dojo-node-preview" style="color:${dojo.color};margin-top:18px;"><strong>${dojo.short}</strong></div>
+          <div class="notice" style="margin-top:18px;">Completa esta mision para desbloquear nuevas rutas.</div>
+          <div class="actions-row">
+            <button class="btn btn-primary" type="button" data-action="enterHub">Entrar a mi dojo</button>
+          </div>
+        `;
+      }
+
+      function enterHub() {
+        state.selectedDojo = state.recommendedDojo;
+        saveState();
+        renderHub();
+        showScreen('hub');
+      }
+
+      function getDojoStatus(id) {
+        if (state.completed[id]) return 'completed';
+        if (!state.diagnosticDone) return 'locked';
+        if (state.routesUnlocked) return 'active';
+        return id === state.recommendedDojo ? 'active' : 'locked';
+      }
+
+      function renderHub() {
+        const hub = document.getElementById('hubNodes');
+        hub.innerHTML = dojos.map(function(dojo) {
+          const status = getDojoStatus(dojo.id);
+          const selected = state.selectedDojo === dojo.id ? ' is-active' : '';
+          const recommended = dojo.id === state.recommendedDojo && !state.routesUnlocked ? ' is-recommended' : '';
+          const locked = status === 'locked' ? ' is-locked' : '';
+          const completed = status === 'completed' ? ' is-completed' : '';
+          const statusText = getStatusText(status);
+          const lockText = status === 'locked' ? 'Se desbloquea despues de completar tu primera mision.' : dojo.focus;
+          return `
+            <button class="hub-node ${dojo.positionClass}${selected}${recommended}${locked}${completed}" type="button" data-dojo="${dojo.id}" style="--dojo-color:${dojo.color};">
+              <strong>${dojo.name}</strong>
+              <span>${statusText}</span>
+              <small>${lockText}</small>
+            </button>
+          `;
+        }).join('');
+
+        document.querySelectorAll('[data-dojo]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            const id = button.dataset.dojo;
+            if (getDojoStatus(id) === 'locked') {
+              document.getElementById('hubAlert').classList.remove('is-hidden');
+              return;
+            }
+            document.getElementById('hubAlert').classList.add('is-hidden');
+            state.selectedDojo = id;
+            saveState();
+            renderHub();
+          });
+        });
+
+        updateDashboard();
+      }
+
+      function chooseDojo() {
+        if (!state.selectedDojo || getDojoStatus(state.selectedDojo) === 'locked') {
+          document.getElementById('hubAlert').classList.remove('is-hidden');
+          return;
+        }
+        document.getElementById('hubAlert').classList.add('is-hidden');
+        renderMission();
+        showScreen('mission');
+      }
+
+      function renderMission() {
+        const dojo = getDojo(state.selectedDojo);
+        document.getElementById('missionContent').innerHTML = `
+          <div class="mission-avatar-row">
+            ${avatarHtml('', 'idle')}
+            <div>
+              <span class="eyebrow" style="color:${dojo.color};border-color:${dojo.color};">${dojo.name}</span>
+              <h3 style="margin-top:14px;">${dojo.mission.title}</h3>
+              <p class="helper-text" style="margin-top:8px;">Completa esta mision para desbloquear nuevas rutas.</p>
+            </div>
+          </div>
+          <div class="mission-brief">
+            <div class="brief-item"><strong>Objetivo</strong><span>${dojo.mission.goal}</span></div>
+            <div class="brief-item"><strong>Escenario practico</strong><span>${dojo.mission.scenario}</span></div>
+            <div class="brief-item"><strong>Reto</strong><span>${dojo.mission.task}</span></div>
+            <div class="brief-item"><strong>Recompensa</strong><span>Hasta ${dojo.mission.xp} XP y ${dojo.reward}.</span></div>
+          </div>
+        `;
+      }
+
+      function startQuiz() {
+        selectedQuizOption = null;
+        state.quizIndex = 0;
+        state.quizAnswers = [];
+        saveState();
+        renderQuiz();
+        showScreen('quiz');
+      }
+
+      function renderQuiz() {
+        const dojo = getDojo(state.selectedDojo);
+        const questions = getQuizQuestions(dojo);
+        const question = questions[state.quizIndex];
+        const selected = state.quizAnswers[state.quizIndex];
+        const percent = Math.round(((state.quizIndex + 1) / questions.length) * 100);
+        document.getElementById('quizAlert').classList.add('is-hidden');
+        document.getElementById('quizContent').innerHTML = `
+          <div class="quiz-head">
+            ${avatarHtml('', 'thinking')}
+            <div>
+              <span class="eyebrow" style="color:${dojo.color};border-color:${dojo.color};">Reto activo</span>
+              <h3 style="margin-top:14px;">${question.question}</h3>
+              <div class="meter-label" style="margin-top:14px;">
+                <span>Pregunta ${state.quizIndex + 1} de ${questions.length}</span>
+                <span>${percent}%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:${percent}%;background:${dojo.color};"></div></div>
+            </div>
+          </div>
+          <div class="quiz-options">
+            ${question.options.map(function(option, index) {
+              const active = selected === index ? ' is-selected' : '';
+              return `<button class="quiz-option${active}" type="button" data-option="${index}">${option}</button>`;
+            }).join('')}
+          </div>
+          <div class="quiz-feedback helper-text" id="quizFeedback"></div>
+        `;
+
+        document.querySelectorAll('[data-option]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            selectedQuizOption = Number(button.dataset.option);
+            state.quizAnswers[state.quizIndex] = selectedQuizOption;
+            saveState();
+            document.querySelectorAll('[data-option]').forEach(function(item) {
+              item.classList.remove('is-selected');
+            });
+            button.classList.add('is-selected');
+          });
+        });
+      }
+
+      function submitQuiz() {
+        const dojo = getDojo(state.selectedDojo);
+        const questions = getQuizQuestions(dojo);
+        const selected = state.quizAnswers[state.quizIndex];
+        if (typeof selected !== 'number') {
+          document.getElementById('quizAlert').classList.remove('is-hidden');
+          return;
+        }
+
+        const question = questions[state.quizIndex];
+        const correct = selected === question.answer;
+        paintQuizResult(correct, question.answer, selected);
+        document.getElementById('quizFeedback').textContent = question.feedback;
+
+        if (state.quizIndex < questions.length - 1) {
+          window.setTimeout(function() {
+            state.quizIndex += 1;
+            selectedQuizOption = null;
+            saveState();
+            renderQuiz();
+          }, 650);
+          return;
+        }
+
+        const correctCount = questions.reduce(function(total, item, index) {
+          return total + (state.quizAnswers[index] === item.answer ? 1 : 0);
+        }, 0);
+        const earnedXp = calculateXp(dojo.mission.xp, correctCount, questions.length);
+        const firstCompletion = !state.completed[dojo.id];
+
+        if (firstCompletion) {
+          state.xp += earnedXp;
+          state.completed[dojo.id] = {
+            score: Math.round((correctCount / questions.length) * 100),
+            correct: correctCount,
+            total: questions.length,
+            xp: earnedXp,
+            completedAt: new Date().toISOString()
+          };
+        }
+
+        if (isRecommendedCompleted()) {
+          state.routesUnlocked = true;
+        }
+
+        state.lastScore = {
+          dojoId: dojo.id,
+          correct: correctCount === questions.length,
+          correctCount: correctCount,
+          totalQuestions: questions.length,
+          xp: firstCompletion ? earnedXp : 0,
+          alreadyCompleted: !firstCompletion,
+          unlockedNow: state.routesUnlocked && dojo.id === state.recommendedDojo
+        };
+
+        saveState();
+        renderReward();
+        renderHub();
+        showScreen('reward');
+      }
+
+      function paintQuizResult(correct, answerIndex, selectedIndex) {
+        document.querySelectorAll('[data-option]').forEach(function(button) {
+          const option = Number(button.dataset.option);
+          button.classList.toggle('is-correct', option === answerIndex);
+          button.classList.toggle('is-wrong', option === selectedIndex && !correct);
+        });
+        const quizAvatar = document.querySelector('#quizContent .avatar-shell');
+        if (quizAvatar && !correct) {
+          quizAvatar.classList.remove('is-thinking');
+          quizAvatar.classList.add('is-wrong');
+        }
+      }
+
+      function calculateXp(baseXp, correctCount, totalQuestions) {
+        if (correctCount === totalQuestions) return baseXp;
+        if (correctCount === totalQuestions - 1) return Math.round(baseXp * 0.75);
+        if (correctCount === 1) return Math.round(baseXp * 0.45);
+        return Math.round(baseXp * 0.25);
+      }
+
+      function getQuizQuestions(dojo) {
+        const banks = {
+          excel: [
+            {
+              question: dojo.mission.question,
+              options: dojo.mission.options,
+              answer: dojo.mission.answer,
+              feedback: dojo.mission.feedback
+            },
+            {
+              question: 'Antes de cruzar dos bases de postulantes, que debes validar?',
+              options: [
+                'Que ambas bases tengan una clave comun y datos comparables.',
+                'Que las dos hojas tengan el mismo color de encabezado.',
+                'Que todos los archivos esten abiertos al mismo tiempo.'
+              ],
+              answer: 0,
+              feedback: 'Correcto: una clave comun evita cruces falsos o duplicados.'
+            },
+            {
+              question: 'Que indicador ayuda a seguir un proceso de seleccion?',
+              options: [
+                'Cantidad de canciones escuchadas mientras trabajas.',
+                'Postulantes por etapa, avance y pendientes por responsable.',
+                'El color mas usado en la hoja de calculo.'
+              ],
+              answer: 1,
+              feedback: 'Bien: etapas, avance y pendientes hacen visible el funnel.'
+            }
+          ],
+          office: [
+            {
+              question: dojo.mission.question,
+              options: dojo.mission.options,
+              answer: dojo.mission.answer,
+              feedback: dojo.mission.feedback
+            },
+            {
+              question: 'Que hace que una presentacion sea mas ejecutiva?',
+              options: [
+                'Un objetivo claro, pocos mensajes clave y datos faciles de leer.',
+                'Mucho texto pequeno para llenar cada diapositiva.',
+                'Usar todos los colores disponibles.'
+              ],
+              answer: 0,
+              feedback: 'Correcto: una presentacion ejecutiva facilita decision rapida.'
+            },
+            {
+              question: 'Si preparas un documento operativo, que conviene incluir?',
+              options: [
+                'Pasos, responsables, fechas y criterios de revision.',
+                'Solo imagenes decorativas.',
+                'Parrafos largos sin estructura.'
+              ],
+              answer: 0,
+              feedback: 'Bien: pasos y responsables convierten el documento en accion.'
+            }
+          ],
+          ai: [
+            {
+              question: dojo.mission.question,
+              options: dojo.mission.options,
+              answer: dojo.mission.answer,
+              feedback: dojo.mission.feedback
+            },
+            {
+              question: 'Que elemento mejora una respuesta de IA?',
+              options: [
+                'Dar contexto, rol, tarea y formato esperado.',
+                'Pedir solo "hazlo mejor".',
+                'No explicar para que se usara la respuesta.'
+              ],
+              answer: 0,
+              feedback: 'Correcto: contexto y formato reducen respuestas genericas.'
+            },
+            {
+              question: 'Como deberias usar IA en un trabajo academico?',
+              options: [
+                'Copiar todo sin revisar.',
+                'Usarla como apoyo, verificar datos y adaptar con criterio propio.',
+                'Pedir que invente fuentes.'
+              ],
+              answer: 1,
+              feedback: 'Bien: IA debe apoyar tu criterio, no reemplazarlo.'
+            }
+          ],
+          pc: [
+            {
+              question: dojo.mission.question,
+              options: dojo.mission.options,
+              answer: dojo.mission.answer,
+              feedback: dojo.mission.feedback
+            },
+            {
+              question: 'Que practica mejora la seguridad al instalar programas?',
+              options: [
+                'Descargar desde sitios oficiales y revisar permisos.',
+                'Instalar cualquier archivo recibido por mensaje.',
+                'Desactivar alertas sin leerlas.'
+              ],
+              answer: 0,
+              feedback: 'Correcto: fuentes oficiales y permisos reducen riesgos.'
+            },
+            {
+              question: 'Que nombre de archivo es mas profesional?',
+              options: [
+                'nuevoooo_final_ultimo2.docx',
+                'CV_Tony_RRHH_2026.pdf',
+                'documento sin titulo.pdf'
+              ],
+              answer: 1,
+              feedback: 'Bien: nombres claros permiten encontrar y compartir mejor.'
+            }
+          ]
+        };
+        return banks[dojo.id];
+      }
+
+      function renderReward() {
+        const dojo = getDojo(state.lastScore.dojoId);
+        const belt = getBelt(state.xp);
+        const xpText = state.lastScore.alreadyCompleted ? '0 XP' : `+${state.lastScore.xp} XP`;
+        const resultText = `${state.lastScore.correctCount}/${state.lastScore.totalQuestions} aciertos`;
+        const unlock = state.lastScore.unlockedNow
+          ? '<div class="notice">¡Nuevas rutas desbloqueadas! Ahora puedes explorar otros dojos.</div>'
+          : '<div class="notice">Sigue entrenando para subir de cinturon.</div>';
+
+        document.getElementById('rewardContent').innerHTML = `
+          ${avatarHtml('', 'celebrate')}
+          <span class="eyebrow">Recompensa</span>
+          <h3>¡Mision completada!</h3>
+          <div class="floating-xp">${xpText}</div>
+          <div class="xp-burst"><div><strong>${xpText}</strong><span>ganado</span></div></div>
+          <p class="helper-text"><strong>${resultText}</strong>. ${getResultMessage(state.lastScore.correctCount, state.lastScore.totalQuestions)}</p>
+          <p class="helper-text">Cinturon actual: <strong>${belt.name}</strong>.</p>
+          ${unlock}
+        `;
+      }
+
+      function getResultMessage(correctCount, totalQuestions) {
+        if (correctCount === totalQuestions) return 'Dominaste el reto con energia completa.';
+        if (correctCount === totalQuestions - 1) return 'Muy buen avance. Estas cerca del dominio total.';
+        if (correctCount === 1) return 'Ganaste XP basico y una pista clara para seguir entrenando.';
+        return 'Ruta de repaso sugerida. Igual ganaste energia para continuar.';
+      }
+
+      function updateDashboard() {
+        const belt = getBelt(state.xp);
+        const completedCount = Object.keys(state.completed || {}).length;
+        const name = state.name || 'Nuevo aprendiz';
+        const routeText = !state.name
+          ? 'Crea tu aprendiz digital para entrar a la arena.'
+          : !state.diagnosticDone
+            ? 'Completa el diagnostico para abrir tu primer dojo.'
+            : state.routesUnlocked
+              ? 'Nuevas rutas desbloqueadas.'
+              : 'Solo tu dojo recomendado esta activo.';
+
+        document.getElementById('profileName').textContent = name;
+        document.getElementById('beltName').textContent = belt.name;
+        document.getElementById('xpTotal').textContent = `${state.xp} XP`;
+        document.getElementById('missionCount').textContent = `${completedCount}/4`;
+        document.getElementById('beltPercent').textContent = `${belt.progress}%`;
+        document.getElementById('xpFill').style.width = `${belt.progress}%`;
+        document.getElementById('routeNotice').textContent = routeText;
+        document.getElementById('hubName').textContent = name;
+        document.getElementById('hubXp').textContent = `${state.xp} XP`;
+        document.getElementById('hubBelt').textContent = belt.name;
+        document.getElementById('hubFill').style.width = `${belt.progress}%`;
+        renderAvatarEverywhere();
+        renderProgress();
+      }
+
+      function renderProgress() {
+        document.getElementById('progressGrid').innerHTML = dojos.map(function(dojo) {
+          const status = getDojoStatus(dojo.id);
+          const completed = state.completed[dojo.id];
+          const percent = completed ? 100 : status === 'active' ? 25 : 0;
+          const detail = completed
+            ? `Completado con ${completed.score} puntos y ${completed.xp} XP.`
+            : status === 'locked'
+              ? 'Bloqueado hasta completar la primera mision recomendada.'
+              : 'Activo para entrenar.';
+          return `
+            <article class="progress-card panel" style="border-color:${dojo.color};">
+              <strong style="color:${dojo.color};">${dojo.name}</strong>
+              <span>${detail}</span>
+              <div class="actions-row" style="margin-top:12px;"><span class="pill ${status === 'completed' ? 'done' : status === 'locked' ? 'locked' : 'active'}">${getStatusText(status)}</span></div>
+              <div class="progress-track" style="margin-top:14px;"><div class="progress-fill" style="width:${percent}%;background:${dojo.color};"></div></div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      function getStatusText(status) {
+        if (status === 'completed') return 'Completado';
+        if (status === 'locked') return 'Bloqueado';
+        return 'Activo';
+      }
+
+      function isRecommendedCompleted() {
+        return Boolean(state.recommendedDojo && state.completed[state.recommendedDojo]);
+      }
+
+      function getBelt(xp) {
+        if (xp >= 180) return { name: 'Cinturon Verde', progress: 100 };
+        if (xp >= 100) return { name: 'Cinturon Amarillo', progress: Math.round((xp / 180) * 100) };
+        return { name: 'Cinturon Blanco', progress: Math.round((xp / 100) * 100) };
+      }
+
+      function getDojo(id) {
+        return dojos.find(function(dojo) {
+          return dojo.id === id;
+        });
+      }
+
+      function getAvatarBase(id) {
+        return avatarBases.find(function(item) { return item.id === id; }) || avatarBases[0];
+      }
+
+      function getAura(id) {
+        return auraOptions.find(function(item) { return item.id === id; }) || auraOptions[0];
+      }
+
+      function getStyle(id) {
+        return styleOptions.find(function(item) { return item.id === id; }) || styleOptions[0];
+      }
+
+      function showScreen(name) {
+        Object.keys(screens).forEach(function(key) {
+          screens[key].classList.toggle('is-active', key === name);
+        });
+        const meta = screenMeta[name];
+        document.getElementById('screenKicker').textContent = meta[0];
+        document.getElementById('screenTitle').textContent = meta[1];
+        document.getElementById('screenStep').textContent = meta[2];
+        renderAvatarEverywhere();
+      }
+
+      function resetTraining() {
+        const confirmed = window.confirm('Esto limpia nombre, avatar, diagnostico, XP, misiones y rutas. Deseas continuar?');
+        if (!confirmed) return;
+        localStorage.removeItem(STORAGE_KEY);
+        state = createDefaultState();
+        selectedQuizOption = null;
+        hydrateProfileForm();
+        renderAvatarSelectors();
+        renderDiagnosticQuestion();
+        updateDashboard();
+        showScreen('profile');
+      }
+    </script>
+  </body>
+</html>
