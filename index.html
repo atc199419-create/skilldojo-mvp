@@ -1181,6 +1181,96 @@
         display: none;
       }
 
+      .splash-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: grid;
+        place-items: center;
+        padding: 28px;
+        color: var(--text);
+        cursor: pointer;
+        background:
+          radial-gradient(circle at 50% 42%, rgba(0, 229, 255, 0.2), transparent 34%),
+          radial-gradient(circle at 50% 66%, rgba(0, 167, 145, 0.16), transparent 42%),
+          linear-gradient(180deg, #08090C 0%, #011F35 100%);
+        opacity: 1;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        transition: opacity 420ms ease, transform 420ms ease;
+      }
+
+      .splash-screen.is-leaving {
+        opacity: 0;
+        transform: scale(1.02) translateZ(0);
+        pointer-events: none;
+      }
+
+      .splash-screen.is-hidden {
+        display: none;
+      }
+
+      .splash-core {
+        width: min(320px, 82vw);
+        min-height: min(320px, 82vw);
+        display: grid;
+        place-items: center;
+        gap: 18px;
+        text-align: center;
+      }
+
+      .splash-orb {
+        position: relative;
+        width: min(210px, 58vw);
+        height: min(210px, 58vw);
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle, rgba(0, 229, 255, 0.16), rgba(8, 9, 12, 0.92) 66%),
+          #08090C;
+        border: 1px solid rgba(0, 229, 255, 0.28);
+        box-shadow: 0 0 42px rgba(0, 229, 255, 0.28);
+        animation: splashPulse 2.8s ease-in-out infinite;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        will-change: transform, opacity;
+      }
+
+      .splash-orb::before {
+        content: "";
+        position: absolute;
+        inset: -16px;
+        border-radius: inherit;
+        border: 1px solid rgba(0, 229, 255, 0.24);
+        border-top-color: rgba(255, 215, 0, 0.5);
+        animation: splashRing 8s linear infinite;
+      }
+
+      .splash-orb img {
+        width: 72%;
+        height: 72%;
+        object-fit: contain;
+        display: block;
+        border-radius: 999px;
+      }
+
+      .splash-core strong {
+        display: block;
+        color: var(--turquoise);
+        font-size: clamp(1.8rem, 10vw, 2.6rem);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .splash-core span {
+        display: block;
+        color: #D7F8FF;
+        font-size: 1rem;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
       .is-hidden {
         display: none !important;
       }
@@ -1211,6 +1301,15 @@
       @keyframes avatarFloat {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-7px); }
+      }
+
+      @keyframes splashPulse {
+        0%, 100% { transform: scale(1) translateZ(0); opacity: 0.96; }
+        50% { transform: scale(1.025) translateZ(0); opacity: 1; }
+      }
+
+      @keyframes splashRing {
+        to { transform: rotate(360deg); }
       }
 
       @keyframes screenIn {
@@ -1599,6 +1698,65 @@
           height: min(150px, 52vw);
         }
 
+        #screenMission .mission-avatar-row {
+          grid-template-columns: 72px 1fr;
+          gap: 10px;
+          align-items: start;
+        }
+
+        #screenMission .mission-avatar-row .avatar-shell,
+        #screenQuiz .quiz-head .avatar-shell,
+        #screenReward .reward-card .avatar-shell {
+          width: 72px;
+          height: 72px;
+          flex: 0 0 72px;
+        }
+
+        #screenMission .mission-avatar-row .avatar-core,
+        #screenQuiz .quiz-head .avatar-core,
+        #screenReward .reward-card .avatar-core {
+          width: 56px;
+          height: 56px;
+        }
+
+        #screenMission .mission-avatar-row .avatar-img,
+        #screenQuiz .quiz-head .avatar-img,
+        #screenReward .reward-card .avatar-img {
+          width: 50px;
+          height: 50px;
+          object-fit: contain;
+        }
+
+        #screenQuiz .question-card {
+          padding: 14px;
+        }
+
+        #screenQuiz .quiz-head {
+          grid-template-columns: 72px 1fr;
+          gap: 10px;
+          align-items: start;
+        }
+
+        #screenQuiz h3 {
+          font-size: clamp(1.08rem, 5vw, 1.35rem);
+          line-height: 1.18;
+        }
+
+        #screenQuiz .quiz-options {
+          gap: 9px;
+          margin-top: 12px;
+        }
+
+        #screenQuiz .quiz-option {
+          min-height: 58px;
+          padding: 12px;
+        }
+
+        #screenReward .reward-card {
+          display: grid;
+          gap: 12px;
+        }
+
         .route-result {
           gap: 16px;
         }
@@ -1726,6 +1884,8 @@
         .avatar-shell,
         .gate-ring,
         .gate-logo,
+        .splash-orb,
+        .splash-orb::before,
         .btn-pulse,
         .hub-node,
         .dojo-node-preview {
@@ -1736,6 +1896,18 @@
   </head>
 
   <body>
+    <div class="splash-screen" id="splashScreen" role="button" tabindex="0" aria-label="Toca para entrar al Dojo">
+      <div class="splash-core">
+        <div class="splash-orb" aria-hidden="true">
+          <img src="https://drive.google.com/thumbnail?id=1b5F20OL-tsd3BKz3Egv6TbLdeQKoBx6v&sz=w384" alt="" width="150" height="150" decoding="async">
+        </div>
+        <div>
+          <strong>SkillDojo</strong>
+          <span>Toca para entrar al Dojo</span>
+        </div>
+      </div>
+    </div>
+
     <div class="app-shell">
       <header class="topbar">
         <div class="container topbar-inner">
@@ -2244,6 +2416,7 @@
         renderDiagnosticQuestion();
         updateDashboard();
         bindMobileNav();
+        bindSplash();
         if (isMobileApp()) {
           setMobileView('home');
           showScreen(state.name ? (state.diagnosticDone ? 'hub' : 'diagnostic') : 'profile');
@@ -2282,6 +2455,31 @@
         document.getElementById('learnerName').addEventListener('input', function(event) {
           state.name = event.target.value.trim();
           renderAvatarEverywhere();
+        });
+      }
+
+      function bindSplash() {
+        const splash = document.getElementById('splashScreen');
+        if (!splash) return;
+
+        const enter = function() {
+          if (splash.classList.contains('is-leaving')) return;
+          splash.classList.add('is-leaving');
+          window.setTimeout(function() {
+            splash.classList.add('is-hidden');
+            if (isMobileApp()) {
+              setMobileView('arena');
+            }
+            showInitialScreen();
+          }, 430);
+        };
+
+        splash.addEventListener('click', enter);
+        splash.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            enter();
+          }
         });
       }
 
