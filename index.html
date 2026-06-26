@@ -893,6 +893,7 @@
 
       .option-grid,
       .quiz-options,
+      .training-grid,
       .mission-brief {
         display: grid;
         gap: 11px;
@@ -1060,6 +1061,163 @@
         margin-top: 6px;
         color: var(--muted);
         line-height: 1.5;
+      }
+
+      .dojo-companion {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .dialogue-bubble {
+        position: relative;
+        padding: 14px 15px;
+        border: 1px solid rgba(0, 229, 255, 0.2);
+        border-radius: 18px;
+        color: #D7F8FF;
+        background: rgba(0, 229, 255, 0.075);
+        line-height: 1.45;
+        font-weight: 800;
+      }
+
+      .dialogue-bubble::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: 34px;
+        width: 14px;
+        height: 14px;
+        border-left: 1px solid rgba(0, 229, 255, 0.2);
+        border-top: 1px solid rgba(0, 229, 255, 0.2);
+        background: rgba(0, 229, 255, 0.075);
+        transform: rotate(45deg);
+      }
+
+      .narration-toggle {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .narration-toggle button {
+        min-height: 42px;
+        border-radius: 14px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.045);
+        border: 1px solid rgba(0, 229, 255, 0.16);
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .narration-toggle button.is-selected {
+        color: #00151A;
+        background: linear-gradient(135deg, var(--cyan), var(--turquoise));
+      }
+
+      .topic-search {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+        padding: 16px;
+        border: 1px solid rgba(0, 229, 255, 0.16);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .topic-search-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+      }
+
+      .training-card {
+        display: grid;
+        grid-template-columns: 128px 1fr;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .training-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .battle-board {
+        position: relative;
+        min-height: 172px;
+        display: grid;
+        place-items: center;
+        margin: 18px 0;
+        padding: 18px;
+        border: 1px solid rgba(255, 215, 0, 0.22);
+        border-radius: 22px;
+        background:
+          radial-gradient(circle at center, rgba(255, 215, 0, 0.12), transparent 58%),
+          rgba(255, 255, 255, 0.035);
+        overflow: hidden;
+      }
+
+      .battle-table {
+        position: relative;
+        width: min(360px, 88%);
+        height: 84px;
+        display: grid;
+        place-items: center;
+        color: #271600;
+        background: linear-gradient(180deg, #FFD99B, #B87428);
+        border: 2px solid rgba(255, 242, 166, 0.72);
+        border-radius: 12px;
+        box-shadow: 0 18px 34px rgba(0, 0, 0, 0.34), inset 0 0 18px rgba(255, 255, 255, 0.28);
+        font-weight: 900;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+
+      .battle-table::before,
+      .battle-table::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: inherit;
+        transition: transform 0.46s ease, opacity 0.46s ease;
+      }
+
+      .battle-table::before {
+        clip-path: polygon(0 0, 52% 0, 42% 100%, 0 100%);
+      }
+
+      .battle-table::after {
+        clip-path: polygon(52% 0, 100% 0, 100% 100%, 42% 100%);
+      }
+
+      .battle-table span {
+        position: relative;
+        z-index: 2;
+      }
+
+      .battle-table.is-broken {
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      .battle-table.is-broken::before {
+        transform: translate(-34px, 28px) rotate(-18deg);
+        opacity: 0.85;
+      }
+
+      .battle-table.is-broken::after {
+        transform: translate(34px, 28px) rotate(18deg);
+        opacity: 0.85;
+      }
+
+      .battle-table.is-broken span {
+        opacity: 0;
+      }
+
+      .battle-table.is-shaking {
+        animation: tableShake 0.38s ease both;
       }
 
       .quiz-option.is-correct {
@@ -1333,6 +1491,14 @@
         75% { transform: translateX(5px); }
       }
 
+      @keyframes tableShake {
+        0%, 100% { transform: translateX(0) translateZ(0); }
+        20% { transform: translateX(-8px) translateZ(0); }
+        40% { transform: translateX(8px) translateZ(0); }
+        60% { transform: translateX(-6px) translateZ(0); }
+        80% { transform: translateX(6px) translateZ(0); }
+      }
+
       @keyframes xpBurst {
         from { opacity: 0; transform: scale(0.75) rotate(-8deg); }
         to { opacity: 1; transform: scale(1) rotate(0); }
@@ -1524,6 +1690,9 @@
         .profile-readout,
         .choice-grid,
         .quiz-head,
+        .training-card,
+        .training-grid,
+        .topic-search-row,
         .mission-avatar-row,
         .progress-grid {
           grid-template-columns: 1fr;
@@ -1662,6 +1831,22 @@
         .mission-card,
         .reward-card {
           padding: 16px;
+        }
+
+        .topic-search,
+        .dialogue-bubble {
+          padding: 13px;
+        }
+
+        .battle-board {
+          min-height: 138px;
+          margin: 14px 0;
+          padding: 12px;
+        }
+
+        .battle-table {
+          width: 100%;
+          height: 72px;
         }
 
         .hub-wrap {
@@ -1888,7 +2073,8 @@
         .splash-orb::before,
         .btn-pulse,
         .hub-node,
-        .dojo-node-preview {
+        .dojo-node-preview,
+        .battle-table.is-shaking {
           animation: none !important;
         }
       }
@@ -2008,6 +2194,22 @@
                   </div>
                 </div>
                 <div class="notice" id="routeNotice">Crea tu aprendiz digital para entrar a la arena.</div>
+                <div class="dojo-companion">
+                  <button class="btn btn-outline" type="button" data-action="avatarTalk">Hablar con avatar</button>
+                  <div class="dialogue-bubble" id="avatarBubble" data-avatar-bubble>Toca tu avatar para recibir una pista de entrenamiento.</div>
+                  <div class="narration-toggle" aria-label="Selector de narracion">
+                    <button type="button" data-narration="first">Yo entreno</button>
+                    <button type="button" data-narration="third">Sensei narra</button>
+                  </div>
+                </div>
+                <div class="topic-search">
+                  <strong>Buscar tema</strong>
+                  <div class="topic-search-row">
+                    <input class="input" id="topicSearchInput" data-topic-input type="search" maxlength="80" placeholder="Ejemplo: tablas, prompts, CV, seguridad">
+                    <button class="btn btn-primary" type="button" data-action="searchTopic">Recomendar</button>
+                  </div>
+                  <p class="helper-text" id="topicSearchResult" data-topic-result>Escribe un tema para sugerir el dojo ideal.</p>
+                </div>
               </div>
             </aside>
 
@@ -2107,6 +2309,22 @@
                   <div id="hubNodes"></div>
                 </div>
                 <div class="notice is-hidden" id="hubAlert">Completa primero tu mision recomendada para desbloquear nuevas rutas.</div>
+                <div class="topic-search">
+                  <div class="dojo-companion">
+                    <button class="btn btn-outline" type="button" data-action="avatarTalk">Hablar con avatar</button>
+                    <div class="dialogue-bubble" data-avatar-bubble>Tu avatar puede darte una pista antes de elegir dojo.</div>
+                    <div class="narration-toggle" aria-label="Selector de narracion del hub">
+                      <button type="button" data-narration="first">Yo entreno</button>
+                      <button type="button" data-narration="third">Sensei narra</button>
+                    </div>
+                  </div>
+                  <strong>Buscador de entrenamiento</strong>
+                  <div class="topic-search-row">
+                    <input class="input" data-topic-input type="search" maxlength="80" placeholder="Ejemplo: formulas, informe, IA, archivos">
+                    <button class="btn btn-primary" type="button" data-action="searchTopic">Recomendar</button>
+                  </div>
+                  <p class="helper-text" data-topic-result>Busca un tema y SkillDojo sugerira un dojo.</p>
+                </div>
                 <div class="actions-row">
                   <button class="btn btn-primary" type="button" data-action="chooseDojo">Entrar al dojo activo</button>
                 </div>
@@ -2120,11 +2338,19 @@
                 </div>
               </div>
 
+              <div class="screen" id="screenTraining">
+                <div class="mission-card" id="trainingContent"></div>
+                <div class="actions-row">
+                  <button class="btn btn-primary" type="button" data-action="beginBattle">Entrar a batalla</button>
+                  <button class="btn btn-outline" type="button" data-action="backMission">Volver a la mision</button>
+                </div>
+              </div>
+
               <div class="screen" id="screenQuiz">
                 <div class="question-card" id="quizContent"></div>
-                <div class="notice is-hidden" id="quizAlert">Selecciona una respuesta antes de enviar.</div>
+                <div class="notice is-hidden" id="quizAlert">Selecciona una respuesta antes de golpear la tabla.</div>
                 <div class="actions-row">
-                  <button class="btn btn-gold" type="button" data-action="submitQuiz">Enviar respuesta</button>
+                  <button class="btn btn-gold" type="button" data-action="submitQuiz">Golpear tabla</button>
                   <button class="btn btn-outline" type="button" data-action="backMission">Volver a la mision</button>
                 </div>
               </div>
@@ -2378,6 +2604,11 @@
           diagnosticAnswers: {},
           quizIndex: 0,
           quizAnswers: [],
+          quizAttempts: [],
+          narrationMode: 'first',
+          topicQuery: '',
+          topicRecommendation: '',
+          avatarDialogueContext: 'welcome',
           routesUnlocked: false,
           lastScore: null
         };
@@ -2392,6 +2623,7 @@
         routeResult: document.getElementById('screenRouteResult'),
         hub: document.getElementById('screenHub'),
         mission: document.getElementById('screenMission'),
+        training: document.getElementById('screenTraining'),
         quiz: document.getElementById('screenQuiz'),
         reward: document.getElementById('screenReward')
       };
@@ -2402,8 +2634,9 @@
         routeResult: ['Desbloqueo', 'Tu dojo inicial esta listo', 'Paso 3 de 8'],
         hub: ['Dojo Hub', 'Mapa de entrenamiento', 'Paso 4 de 8'],
         mission: ['Mision', 'Completa esta mision para desbloquear rutas', 'Paso 5 de 8'],
-        quiz: ['Reto', 'Resuelve el desafio', 'Paso 6 de 8'],
-        reward: ['Recompensa', 'Mision completada', 'Paso 7 de 8']
+        training: ['Entrenamiento', 'Prepara tu golpe digital', 'Paso 6 de 9'],
+        quiz: ['Batalla', 'Rompe la tabla con conocimiento', 'Paso 7 de 9'],
+        reward: ['Recompensa', 'Mision completada', 'Paso 8 de 9']
       };
 
       document.addEventListener('DOMContentLoaded', init);
@@ -2417,6 +2650,8 @@
         updateDashboard();
         bindMobileNav();
         bindSplash();
+        updateNarrationControls();
+        updateAvatarDialogue(getAvatarMessage('welcome'));
         if (isMobileApp()) {
           setMobileView('home');
           showScreen(state.name ? (state.diagnosticDone ? 'hub' : 'diagnostic') : 'profile');
@@ -2443,18 +2678,45 @@
             chooseDojo: chooseDojo,
             backHub: function() { renderHub(); showScreen('hub'); },
             startQuiz: startQuiz,
+            beginBattle: beginBattle,
             backMission: function() { showScreen('mission'); },
             submitQuiz: submitQuiz,
+            avatarTalk: cycleAvatarDialogue,
+            searchTopic: searchTopic,
             reset: resetTraining
           };
 
           const action = actions[target.dataset.action];
-          if (action) action();
+          if (action) action(target);
         });
 
         document.getElementById('learnerName').addEventListener('input', function(event) {
           state.name = event.target.value.trim();
           renderAvatarEverywhere();
+        });
+
+        document.body.addEventListener('click', function(event) {
+          if (event.target.closest('.avatar-shell')) {
+            cycleAvatarDialogue();
+          }
+        });
+
+        document.querySelectorAll('[data-narration]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            state.narrationMode = button.dataset.narration;
+            saveState();
+            updateNarrationControls();
+            updateAvatarDialogue(getAvatarMessage('narration'));
+          });
+        });
+
+        document.querySelectorAll('[data-topic-input]').forEach(function(input) {
+          input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              searchTopic();
+            }
+          });
         });
       }
 
@@ -2544,7 +2806,7 @@
         });
         document.querySelectorAll('[data-mobile-nav]').forEach(function(button) {
           const nav = button.dataset.mobileNav;
-          const isMissionFlow = activeScreen === 'mission' || activeScreen === 'quiz' || activeScreen === 'reward';
+          const isMissionFlow = activeScreen === 'mission' || activeScreen === 'training' || activeScreen === 'quiz' || activeScreen === 'reward';
           const active =
             (view === 'home' && nav === 'home') ||
             (view === 'progress' && nav === 'progress') ||
@@ -2557,15 +2819,124 @@
       function loadState() {
         try {
           const saved = localStorage.getItem(STORAGE_KEY);
-          return saved ? Object.assign(createDefaultState(), JSON.parse(saved)) : createDefaultState();
+          return normalizeState(saved ? Object.assign(createDefaultState(), JSON.parse(saved)) : createDefaultState());
         } catch (error) {
           return createDefaultState();
         }
       }
 
+      function normalizeState(nextState) {
+        nextState.completed = nextState.completed || {};
+        nextState.diagnosticAnswers = nextState.diagnosticAnswers || {};
+        nextState.quizAnswers = Array.isArray(nextState.quizAnswers) ? nextState.quizAnswers : [];
+        nextState.quizAttempts = Array.isArray(nextState.quizAttempts) ? nextState.quizAttempts : [];
+        nextState.narrationMode = nextState.narrationMode || 'first';
+        nextState.topicQuery = nextState.topicQuery || '';
+        nextState.topicRecommendation = nextState.topicRecommendation || '';
+        nextState.avatarDialogueContext = nextState.avatarDialogueContext || 'welcome';
+        return nextState;
+      }
+
       function saveState() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         updateDashboard();
+      }
+
+      function updateNarrationControls() {
+        document.querySelectorAll('[data-narration]').forEach(function(button) {
+          button.classList.toggle('is-selected', button.dataset.narration === state.narrationMode);
+        });
+      }
+
+      function updateAvatarDialogue(message) {
+        document.querySelectorAll('[data-avatar-bubble]').forEach(function(el) {
+          el.textContent = message;
+        });
+      }
+
+      function cycleAvatarDialogue() {
+        const contexts = ['welcome', 'mission', 'battle', 'progress'];
+        const current = contexts.indexOf(state.avatarDialogueContext || 'welcome');
+        state.avatarDialogueContext = contexts[(current + 1) % contexts.length];
+        updateAvatarDialogue(getAvatarMessage(state.avatarDialogueContext));
+      }
+
+      function getAvatarMessage(context) {
+        const dojo = getDojo(state.selectedDojo || state.recommendedDojo) || dojos[0];
+        const name = state.name || 'aprendiz';
+        const messages = {
+          first: {
+            welcome: `Estoy listo, ${name}. Voy a entrenar con foco y convertir cada reto en XP.`,
+            mission: `Mi siguiente paso es claro: practicar ${dojo.name} y completar la mision sin perder ritmo.`,
+            battle: 'Respiro, leo la pregunta y golpeo la tabla solo cuando tenga una respuesta clara.',
+            progress: `Llevo ${state.xp} XP. Mi cinturon sube cuando entreno con constancia.`,
+            narration: 'Modo primera persona activado: ahora el entrenamiento se cuenta desde mi avance.'
+          },
+          third: {
+            welcome: `${name} entra al Dojo. Su avatar observa la arena y prepara el primer movimiento.`,
+            mission: `El sensei recomienda ${dojo.name}. Esta ruta fortalece el siguiente nivel digital.`,
+            battle: 'El avatar mide la tabla. Si responde con criterio, el golpe abre camino.',
+            progress: `${name} acumula ${state.xp} XP y sigue acercandose al siguiente cinturon.`,
+            narration: 'Modo tercera persona activado: el sensei narrara el entrenamiento.'
+          }
+        };
+        const mode = messages[state.narrationMode] ? state.narrationMode : 'first';
+        return messages[mode][context] || messages[mode].welcome;
+      }
+
+      function searchTopic(trigger) {
+        const container = trigger && trigger.closest ? trigger.closest('.topic-search') : null;
+        const activeInput = container
+          ? container.querySelector('[data-topic-input]')
+          : document.activeElement && document.activeElement.matches('[data-topic-input]')
+            ? document.activeElement
+            : document.querySelector('[data-topic-input]');
+        const query = activeInput ? activeInput.value.trim() : '';
+        const recommendation = recommendDojoByTopic(query);
+        state.topicQuery = query;
+        state.topicRecommendation = recommendation.dojo.id;
+        if (getDojoStatus(recommendation.dojo.id) !== 'locked') {
+          state.selectedDojo = recommendation.dojo.id;
+        }
+        saveState();
+        renderHub();
+        updateTopicSearchUi(recommendation);
+        updateAvatarDialogue(recommendation.message);
+      }
+
+      function updateTopicSearchUi(recommendation) {
+        document.querySelectorAll('[data-topic-input]').forEach(function(input) {
+          input.value = state.topicQuery || '';
+        });
+        document.querySelectorAll('[data-topic-result]').forEach(function(el) {
+          const locked = getDojoStatus(recommendation.dojo.id) === 'locked' ? ' Esta ruta aun esta bloqueada.' : ' Puedes entrar a este dojo.';
+          el.textContent = `${recommendation.dojo.name}: ${recommendation.reason}.${locked}`;
+        });
+        updateNarrationControls();
+      }
+
+      function recommendDojoByTopic(query) {
+        const normalized = (query || '').toLowerCase();
+        const keywordMap = [
+          { dojo: 'excel', words: ['excel', 'sheets', 'tabla', 'tablas', 'formula', 'formulas', 'datos', 'base', 'indicador', 'kpi', 'dashboard', 'power bi'] },
+          { dojo: 'office', words: ['word', 'powerpoint', 'presentacion', 'informe', 'documento', 'correo', 'reporte', 'cv', 'entregable'] },
+          { dojo: 'ai', words: ['ia', 'ai', 'chatgpt', 'prompt', 'prompts', 'resumen', 'automatizar', 'redactar', 'estudiar'] },
+          { dojo: 'pc', words: ['pc', 'archivo', 'archivos', 'carpeta', 'seguridad', 'instalar', 'mantenimiento', 'descargas', 'windows'] }
+        ];
+        const found = keywordMap.find(function(item) {
+          return item.words.some(function(word) { return normalized.includes(word); });
+        });
+        const dojo = getDojo(found ? found.dojo : (state.recommendedDojo || 'excel'));
+        const reason = found
+          ? 'el tema coincide con habilidades clave de esta ruta'
+          : 'sin keyword exacta, se mantiene tu ruta recomendada por diagnostico';
+        return {
+          dojo: dojo,
+          reason: reason,
+          message: state.narrationMode === 'third'
+            ? `El sensei detecta "${query || 'tema general'}" y recomienda ${dojo.name}.`
+            : `Detecte "${query || 'tema general'}" y voy a entrenarlo mejor en ${dojo.name}.`
+        };
       }
 
       function showInitialScreen() {
@@ -2688,7 +3059,7 @@
         const currentScreen = Object.keys(screens).find(function(key) {
           return screens[key].classList.contains('is-active');
         });
-        const visualState = currentScreen === 'diagnostic' || currentScreen === 'quiz'
+        const visualState = currentScreen === 'diagnostic' || currentScreen === 'training' || currentScreen === 'quiz'
           ? 'thinking'
           : currentScreen === 'reward'
             ? 'celebrate'
@@ -2875,8 +3246,47 @@
         selectedQuizOption = null;
         state.quizIndex = 0;
         state.quizAnswers = [];
+        state.quizAttempts = [];
+        saveState();
+        renderTraining();
+        updateAvatarDialogue(getAvatarMessage('mission'));
+        showScreen('training');
+      }
+
+      function renderTraining() {
+        const dojo = getDojo(state.selectedDojo);
+        document.getElementById('trainingContent').innerHTML = `
+          <div class="training-card">
+            ${avatarHtml('', 'thinking')}
+            <div>
+              <span class="eyebrow" style="color:${dojo.color};border-color:${dojo.color};">Entrenamiento previo</span>
+              <h3 style="margin-top:14px;">Antes de golpear la tabla</h3>
+              <p class="helper-text" style="margin-top:8px;">${getTrainingNarration(dojo)}</p>
+            </div>
+          </div>
+          <div class="training-grid">
+            <div class="brief-item"><strong>Observa</strong><span>${dojo.mission.scenario}</span></div>
+            <div class="brief-item"><strong>Decide</strong><span>${dojo.mission.task}</span></div>
+            <div class="brief-item"><strong>Golpea</strong><span>Responde bien para romper la tabla. Si fallas, repites la misma pregunta.</span></div>
+          </div>
+          <div class="dialogue-bubble" style="margin-top:16px;">${getAvatarMessage('battle')}</div>
+        `;
+      }
+
+      function getTrainingNarration(dojo) {
+        if (state.narrationMode === 'third') {
+          return `El sensei prepara a ${state.name || 'su aprendiz'} para una batalla de ${dojo.name}. Cada intento define cuanta energia gana.`;
+        }
+        return `Voy a preparar mi golpe en ${dojo.name}. Si respondo al primer intento, gano toda la energia disponible.`;
+      }
+
+      function beginBattle() {
+        selectedQuizOption = null;
+        if (!Array.isArray(state.quizAnswers)) state.quizAnswers = [];
+        if (!Array.isArray(state.quizAttempts)) state.quizAttempts = [];
         saveState();
         renderQuiz();
+        updateAvatarDialogue(getAvatarMessage('battle'));
         showScreen('quiz');
       }
 
@@ -2885,20 +3295,25 @@
         const questions = getQuizQuestions(dojo);
         const question = questions[state.quizIndex];
         const selected = state.quizAnswers[state.quizIndex];
+        const attempts = state.quizAttempts[state.quizIndex] || 0;
         const percent = Math.round(((state.quizIndex + 1) / questions.length) * 100);
         document.getElementById('quizAlert').classList.add('is-hidden');
         document.getElementById('quizContent').innerHTML = `
           <div class="quiz-head">
             ${avatarHtml('', 'thinking')}
             <div>
-              <span class="eyebrow" style="color:${dojo.color};border-color:${dojo.color};">Reto activo</span>
+              <span class="eyebrow" style="color:${dojo.color};border-color:${dojo.color};">Modo batalla</span>
               <h3 style="margin-top:14px;">${question.question}</h3>
               <div class="meter-label" style="margin-top:14px;">
                 <span>Pregunta ${state.quizIndex + 1} de ${questions.length}</span>
                 <span>${percent}%</span>
               </div>
               <div class="progress-track"><div class="progress-fill" style="width:${percent}%;background:${dojo.color};"></div></div>
+              <p class="helper-text" style="margin-top:10px;">Intentos en esta pregunta: <strong>${attempts}</strong>. Siguiente golpe: <strong>${getAttemptXpLabel(attempts + 1)}</strong>.</p>
             </div>
+          </div>
+          <div class="battle-board" aria-live="polite">
+            <div class="battle-table" id="battleTable"><span>Tabla de ${dojo.short}</span></div>
           </div>
           <div class="quiz-options">
             ${question.options.map(function(option, index) {
@@ -2933,8 +3348,22 @@
 
         const question = questions[state.quizIndex];
         const correct = selected === question.answer;
+        state.quizAttempts[state.quizIndex] = (state.quizAttempts[state.quizIndex] || 0) + 1;
+        saveState();
         paintQuizResult(correct, question.answer, selected);
-        document.getElementById('quizFeedback').textContent = question.feedback;
+        document.getElementById('quizFeedback').textContent = correct
+          ? question.feedback
+          : 'La tabla vibro, pero no se rompio. Revisa la pista y golpea de nuevo.';
+
+        if (!correct) {
+          window.setTimeout(function() {
+            state.quizAnswers[state.quizIndex] = null;
+            selectedQuizOption = null;
+            saveState();
+            renderQuiz();
+          }, 760);
+          return;
+        }
 
         if (state.quizIndex < questions.length - 1) {
           window.setTimeout(function() {
@@ -2942,23 +3371,26 @@
             selectedQuizOption = null;
             saveState();
             renderQuiz();
-          }, 650);
+          }, 760);
           return;
         }
 
-        const correctCount = questions.reduce(function(total, item, index) {
-          return total + (state.quizAnswers[index] === item.answer ? 1 : 0);
-        }, 0);
-        const earnedXp = calculateXp(dojo.mission.xp, correctCount, questions.length);
+        completeBattle(dojo, questions);
+      }
+
+      function completeBattle(dojo, questions) {
+        const correctCount = questions.length;
+        const earnedXp = calculateXp(dojo.mission.xp, state.quizAttempts, questions.length);
         const firstCompletion = !state.completed[dojo.id];
 
         if (firstCompletion) {
           state.xp += earnedXp;
           state.completed[dojo.id] = {
-            score: Math.round((correctCount / questions.length) * 100),
+            score: Math.round((earnedXp / dojo.mission.xp) * 100),
             correct: correctCount,
             total: questions.length,
             xp: earnedXp,
+            attempts: state.quizAttempts.slice(),
             completedAt: new Date().toISOString()
           };
         }
@@ -2973,6 +3405,7 @@
           correctCount: correctCount,
           totalQuestions: questions.length,
           xp: firstCompletion ? earnedXp : 0,
+          attempts: state.quizAttempts.slice(),
           alreadyCompleted: !firstCompletion,
           unlockedNow: state.routesUnlocked && dojo.id === state.recommendedDojo
         };
@@ -2989,6 +3422,12 @@
           button.classList.toggle('is-correct', option === answerIndex);
           button.classList.toggle('is-wrong', option === selectedIndex && !correct);
         });
+        const table = document.getElementById('battleTable');
+        if (table) {
+          table.classList.remove('is-broken', 'is-shaking');
+          void table.offsetWidth;
+          table.classList.add(correct ? 'is-broken' : 'is-shaking');
+        }
         const quizAvatar = document.querySelector('#quizContent .avatar-shell');
         if (quizAvatar && !correct) {
           quizAvatar.classList.remove('is-thinking');
@@ -2996,11 +3435,26 @@
         }
       }
 
-      function calculateXp(baseXp, correctCount, totalQuestions) {
-        if (correctCount === totalQuestions) return baseXp;
-        if (correctCount === totalQuestions - 1) return Math.round(baseXp * 0.75);
-        if (correctCount === 1) return Math.round(baseXp * 0.45);
-        return Math.round(baseXp * 0.25);
+      function calculateXp(baseXp, attempts, totalQuestions) {
+        const perQuestion = baseXp / totalQuestions;
+        const earned = Array.from({ length: totalQuestions }).reduce(function(total, _, index) {
+          const attemptCount = attempts[index] || 1;
+          return total + (perQuestion * getAttemptMultiplier(attemptCount));
+        }, 0);
+        return Math.round(earned);
+      }
+
+      function getAttemptMultiplier(attemptCount) {
+        if (attemptCount <= 1) return 1;
+        if (attemptCount === 2) return 0.75;
+        return 0.5;
+      }
+
+      function getAttemptXpLabel(attemptCount) {
+        const multiplier = getAttemptMultiplier(attemptCount);
+        if (multiplier === 1) return 'XP completo';
+        if (multiplier === 0.75) return '75% XP';
+        return '50% XP';
       }
 
       function getQuizQuestions(dojo) {
@@ -3126,6 +3580,9 @@
         const belt = getBelt(state.xp);
         const xpText = state.lastScore.alreadyCompleted ? '0 XP' : `+${state.lastScore.xp} XP`;
         const resultText = `${state.lastScore.correctCount}/${state.lastScore.totalQuestions} aciertos`;
+        const attemptsText = state.lastScore.attempts && state.lastScore.attempts.length
+          ? `Intentos por pregunta: ${state.lastScore.attempts.join(', ')}.`
+          : 'Intentos por pregunta no registrados.';
         const unlock = state.lastScore.unlockedNow
           ? '<div class="notice">¡Nuevas rutas desbloqueadas! Ahora puedes explorar otros dojos.</div>'
           : '<div class="notice">Sigue entrenando para subir de cinturon.</div>';
@@ -3137,6 +3594,7 @@
           <div class="floating-xp">${xpText}</div>
           <div class="xp-burst"><div><strong>${xpText}</strong><span>ganado</span></div></div>
           <p class="helper-text"><strong>${resultText}</strong>. ${getResultMessage(state.lastScore.correctCount, state.lastScore.totalQuestions)}</p>
+          <p class="helper-text">${attemptsText}</p>
           <p class="helper-text">Cinturon actual: <strong>${belt.name}</strong>.</p>
           ${unlock}
         `;
